@@ -5,10 +5,15 @@ session_start();
 include("dbconnection.php");
 include("checklogin.php");
 check_login();
+
 if (isset($_POST['update'])) {
+  $status = $_POST['statusUpdate'];
+  $assigned= $_POST['assignedUpdate'];
   $adminremark = $_POST['aremark'];
   $fid = $_POST['frm_id'];
-  mysqli_query($con, "update ticket set admin_remark='$adminremark',status='closed' where id='$fid'");
+  $userAdmin = $_SESSION['alogin'];
+  print_r($status);
+  mysqli_query($con, "update ticket set admin_remark='$adminremark',status='$status', name_Admin='$userAdmin',assigned_user='$assigned' where id='$fid'");
   echo '<script>alert("Ticket ha sido actualizado, correctamente"); location.replace(document.referrer)</script>';
 }
 ?>
@@ -65,65 +70,156 @@ if (isset($_POST['update'])) {
       <div class="clearfix"></div>
       <?php $rt = mysqli_query($con, "select * from ticket order by id desc");
       while ($row = mysqli_fetch_array($rt)) {
-      ?>
+        ?>
         <div class="row">
           <div class="col-md-12">
             <div class="grid simple no-border">
               <div class="grid-title no-border descriptive clickable">
-                <h4 class="semi-bold"><?php echo $row['subject']; ?></h4>
-                <p><span class="text-success bold">Ticket #<?php echo $_SESSION['sid'] = $row['ticket_id']; ?></span> - Fecha de creación <?php echo $row['posting_date']; ?>
-                  <span class="label label-important"><?php echo $row['status']; ?></span>
+               
+              <h4 class="semi-bold" >
+              <strong>  <?php echo $row['subject']; ?> / <?php echo $row['task_type']; ?></strong>
+                </h4>
+                <p style="width:700px"><span class="text-success bold">Ticket #
+                    <?php echo $_SESSION['sid'] = $row['ticket_id']; ?>
+                  </span> - Fecha de creación
+                  <?php echo $row['posting_date']; ?>
+                  <span class="label label-important"
+                    style="background-color: <?php echo getColorByStatus($row['status']); ?>"><?php echo $row['status']; ?></span>
+                  <span class="label label-important"
+                    style="background-color: <?php echo getColorByPrioprity($row['prioprity']); ?>"><?php echo $row['prioprity']; ?></span>
+                    <span class="label label-important"
+                    style="background-color: #000000;"><?php echo $row['assigned_user']; ?></span>
                 </p>
                 <div class="actions"> <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a> </div>
               </div>
               <div class="grid-body  no-border" style="display:none">
                 <div class="post">
                   <div class="user-profile-pic-wrapper">
-                    <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="../assets/img/user.png" data-src="../assets/img/user.png" src="../assets/img/user.png" alt=""> </div>
+                    <div class="user-profile-pic-normal"> <img width="35" height="35"
+                        data-src-retina="../assets/img/user.png" data-src="../assets/img/user.png"
+                        src="../assets/img/user.png" alt=""> </div>
                   </div>
-                  <div class="info-wrapper">
-                     <div class="info">Usuario:<?php echo $row['name']; ?> </div>
+                  <div class="info-wrapper" >
+                    <div class="info"><strong style="color: #000000">Usuario de reporte: </strong>
+                      <?php echo $row['name']; ?>
+                    </div>
                     <div class="clearfix"></div>
                   </div>
                   <div class="info-wrapper">
-                     <div class="info">Area:<?php echo $row['area']; ?> </div>
+                    <div class="info"><strong style="color: #000000">Area:</strong>
+                      <?php echo $row['area']; ?>
+                    </div>
                     <div class="clearfix"></div>
                   </div>
+                  
                   <div class="info-wrapper">
-                    <div class="info"><?php echo $row['ticket']; ?> </div>
+                    <div class="info"><strong style="color: #000000">Descripción:<br></strong>
+                    
+                      <?php echo $row['ticket']; ?>
+                    </div>
                     <div class="clearfix"></div>
                   </div>
                   <div class="clearfix"></div>
                 </div>
                 <br>
-                <div class="form-actions">
+                <!--FORMULARIO-->
+
+                <div class="form-group">
                   <div class="post col-md-12">
-                    <div class="user-profile-pic-wrapper">
-                      <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="../assets/img/admin.png" data-src="../assets/img/admin.png" src="../assets/img/admin.png" alt=""> </div>
-                    </div>
-                    <div class="info-wrapper">
+                    <div class="col-md-6 col-xs-12">
+
                       <form name="adminr" method="post" enctype="multipart/form-data">
+
+                        <div class="row" style="width: 800px;">
+                        <?php
+                        $rol= $_SESSION['alogin'];
+                          if ($rol === "admin") {
+                            ?>
+                            <div class="col-md-6 col-xs-12">
+                              <label class="col-md-6 col-xs-12 control-label"><strong style="color: #000000">Asignado:</strong></label>
+                              <div class="col-md-6 col-xs-12">
+                                <select name="assignedUpdate" class="form-control select" required>
+                                  <?php
+                                  $sql2 = "SELECT * FROM admin";
+                                  $result = $con->query($sql2);
+                                  while ($row2 = $result->fetch_assoc()) {
+                                    $atender = htmlspecialchars($row2["name"]);
+                                    echo "<option value=\"$atender\">$atender</option>";
+                                  }
+                                  ?>
+                                </select>
+                              </div>
+                            </div>
+                            <?php
+                          }
+                          else{
+                            ?>
+                            <input type="hidden" name="assignedUpdate" value="<?php echo $row['assigned_user']; ?>">
+                            <?php
+                          }
+                        ?>
+
+                          <div class="col-md-6 col-xs-12">
+                            <label class="col-md-6 col-xs-12 control-label"><strong style="color: #000000">Status:</strong></label>
+                            <div class="col-md-6 col-xs-12">
+                              <select name="statusUpdate" class="form-control select" required>
+                                <option value="Abierto">Abierto</option>
+                                <option value="En espera">En espera</option>
+                                <option value="Cerrado">Cerrado</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                        <div class="user-profile-pic-wrapper">
+                          <div class="user-profile-pic-normal"> <img width="35" height="35"
+                              data-src-retina="../assets/img/admin.png" data-src="../assets/img/admin.png"
+                              src="../assets/img/admin.png" alt=""> </div>
+                        </div>
                         <br>
-                        <textarea name="aremark" cols="50" rows="4" required="true"><?php echo $row['admin_remark']; ?></textarea>
+                        <div class="info-wrapper">
+                          <div class="info">Respuesta por 
+                            <?php echo $row['name_Admin']; ?>:
+                            <br>
+                          </div>
+                           <div class="clearfix"></div>
+                        </div>
+                       
+                        <br>
+                        <textarea name="aremark" cols="50" rows="4"
+                           style="border:2px solid #193A63"><?php echo $row['admin_remark']; ?></textarea>
                         <hr>
+
                         <p class="small-text">
-                          <input name="update" type="submit" class="txtbox1" id="Update" value="Actualizar" size="40" />
+                          <input name="update" type="submit" class="txtbox1" id="Update" value="ACTUALIZAR" size="40" style="background-color: #193A63;color: #FFFFFF"/>
                           <input name="frm_id" type="hidden" id="frm_id" value="<?php echo $row['id']; ?>" />
                         </p>
                       </form>
                     </div>
+
                     <div class="clearfix"></div>
                   </div>
                   <div class="clearfix"></div>
                 </div>
+              
+              
+                <!--FIN FORMULARIO -->
               </div>
             </div>
-          <?php } ?>
           </div>
         </div>
+        <?php
+      }
+      ?>
 
 
     </div>
+  </div>
+
+
+  </div>
   </div>
   </div>
 
@@ -162,6 +258,39 @@ if (isset($_POST['update'])) {
   <script src="../assets/js/chat.js" type="text/javascript"></script>
   <script src="../assets/js/demo.js" type="text/javascript"></script>
   <!-- END CORE TEMPLATE JS -->
+
+  <?php
+  function getColorByStatus($status)
+  {
+    switch ($status) {
+      case 'Abierto':
+        return '#B01411'; // Color rojo
+      case 'En espera':
+        return '#D7B40C'; // Color amarillo
+      case 'Cerrado':
+        return '#000000'; // Color verde
+      default:
+        return '#B9A99C'; // Color gris por defecto
+    }
+  }
+
+  function getColorByPrioprity($prioprity)
+  {
+    switch ($prioprity) {
+      case 'Importante':
+        return '#193A63'; // Color azul
+      case 'Urgente-(Problema Funcional)':
+        return '#B01411'; // Color rojo
+      case 'No-Urgente':
+        return '#2D6529'; // Color verde
+      case 'Pregunta':
+        return '#D1650B'; //Color Naranja
+      default:
+        return '#B9A99C'; // Color gris por defecto
+    }
+  }
+  ?>
+
 </body>
 
 </html>

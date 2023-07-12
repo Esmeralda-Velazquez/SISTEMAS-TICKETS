@@ -17,11 +17,14 @@ if (isset($_POST['send'])) {
     $name = $_SESSION['name'];
     $area = $_SESSION['area'];
     $subject = $_POST['subject'];
-    $tt = $_POST['tasktype'];
+
+
+    $tt = $_POST['tasktype']. " " . $_POST['equipoOption']. " ". $_POST['programasOption'];
+
     $priority = $_POST['priority'];
     $ticket = $_POST['description'];
     //$ticfile=$_FILES["tfile'"]["name"];
-    $st = "Open";
+    $st = "Abierto";
     $pdate = date('Y-m-d');
     //move_uploaded_file($_FILES["tfile"]["tmp_name"],"ticketfiles/".$_FILES["tfile"]["name"]);
     $a = mysqli_query($con, "insert into ticket(ticket_id,email_id,subject,task_type,prioprity,ticket,status,posting_date,name,area)  values('$tid','$user','$subject','$tt','$priority','$ticket','$st','$pdate','$name','$area')");
@@ -101,12 +104,42 @@ if (isset($_POST['send'])) {
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-12 control-label">Tipo de Tarea</label>
                                         <div class="col-md-6 col-xs-12">
-                                            <select name="tasktype" class="form-control select" required>
-                                                <option value="">Seleccionar</option>
-                                                <option>Incidente Lógica</option>
-                                                <option>Fallo a Nivel de Servidor</option>
-                                                <option>Error capa de aplicación</option>
+                                            <select name="tasktype" class="form-control select" required onchange="showSubOptions(this.value)">
+                                            <option value="">Seleccionar</option>
+                                            <option value="Equipo-">Equipo</option>
+                                            <option value="Programa-">Programas</option>
+                                            <option value="Internet">Internet</option>
+                                            </select>
+                                        </div>
+                                        </div>
 
+                                        <div id="subOptions" style="display: none;">
+                                        <div id="equipoOptions" style="display: none;">
+                                            <label>Equipo:</label>
+                                            <select name="equipoOption" class="form-control select">
+                                            <option value="">Seleccionar</option>
+                                            <option value="Monitor">Monitor</option>
+                                            <option value="Teclado">Teclado</option>
+                                            <option value="CPU">CPU</option>
+                                            <option value="Impresora">Impresora</option>
+                                            <option value="Control de acceso">Control de acceso</option>
+                                            <option value="CCTV">CCTV</option>
+                                            </select>
+                                        </div>
+
+                                        <div id="programasOptions" style="display: none;">
+                                            <label>Programas:</label>
+                                            <select name="programasOption" class="form-control select">
+                                            <option value="">Seleccionar</option>
+                                            <option value="Appmovil">AppMovil</option>
+                                            <option value="Office">Office</option>
+                                            <option value="Contpaq">Contpaq</option>
+                                            <option value="Checador">Checador</option>
+                                            <option value="Server">Server</option>
+                                            <option value="NAS">NAS</option>
+                                            <option value="Camaras">Camaras</option>
+                                            <option value="Windows">Windows</option>
+                                            <option value="Antivirus">Antivirus</option>
                                             </select>
                                         </div>
                                     </div>
@@ -173,6 +206,26 @@ if (isset($_POST['send'])) {
     <script src="assets/js/core.js" type="text/javascript"></script>
     <script src="assets/js/chat.js" type="text/javascript"></script>
     <script src="assets/js/demo.js" type="text/javascript"></script>
+    <script>
+  function showSubOptions(selectedValue) {
+    var subOptions = document.getElementById("subOptions");
+    var equipoOptions = document.getElementById("equipoOptions");
+    var programasOptions = document.getElementById("programasOptions");
+
+    // Ocultar todas las opciones secundarias
+    equipoOptions.style.display = "none";
+    programasOptions.style.display = "none";
+
+    if (selectedValue === "Equipo-") {
+      equipoOptions.style.display = "block";
+    } else if (selectedValue === "Programa-") {
+      programasOptions.style.display = "block";
+    }
+
+    // Mostrar las opciones secundarias
+    subOptions.style.display = selectedValue ? "block" : "none";
+  }
+</script>
 
 </body>
 

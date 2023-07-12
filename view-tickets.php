@@ -74,16 +74,19 @@ check_login();
                 <div class="grid-title no-border descriptive clickable">
                   <h4 class="semi-bold"><?php echo $row['subject']; ?></h4>
                   <p><span class="text-success bold">Ticket #<?php echo $row['ticket_id']; ?></span> - Fecha de Creación <?php echo $row['posting_date']; ?>
-                    <span class="label label-important"><?php echo $row['status']; ?></span>
+                  <span class="label label-important" style="background-color: <?php echo getColorByStatus($row['status']); ?>"><?php echo $row['status']; ?></span>
                   </p>
                   <div class="actions"> <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a> </div>
                 </div>
                 <div class="grid-body  no-border" style="display:none">
                   <div class="post">
+                    
                     <div class="user-profile-pic-wrapper">
                       <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/user.png" data-src="assets/img/user.png" src="assets/img/user.png" alt=""> </div>
                     </div>
+                    
                     <div class="info-wrapper">
+                      
                       <div class="info"><?php echo $row['ticket']; ?> </div>
                       <div class="clearfix"></div>
                     </div>
@@ -95,14 +98,17 @@ check_login();
                     <div class="form-actions">
                       <div class="post col-md-12">
                         <div class="user-profile-pic-wrapper">
-                          <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/admin.jpg" data-src="assets/img/admin.jpg" src="assets/img/admin.jpg" alt="Admin"> </div>
+                          <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/admin.png" data-src="assets/img/admin.png" src="assets/img/admin.png" alt="Admin"> </div>
                         </div>
+                        <p class="info" style="font-weight: bold; font-size: 15px; color:#0E3A88"><?php echo $row['name_Admin']; ?></p>
+
                         <div class="info-wrapper">
 
                           <br>
                           <?php echo $row['admin_remark']; ?>
                           <hr>
                           <p class="small-text">Publicado en <?php echo $row['admin_remark_date']; ?></p>
+                          
                         </div>
                         <div class="clearfix"></div>
                       </div>
@@ -155,6 +161,21 @@ check_login();
   <script src="assets/js/chat.js" type="text/javascript"></script>
   <script src="assets/js/demo.js" type="text/javascript"></script>
   <!-- END CORE TEMPLATE JS -->
+
+  <?php
+function getColorByStatus($status) {
+    switch ($status) {
+        case 'Abierto':
+            return '#B01411'; // Color rojo
+        case 'En espera':
+            return '#D7B40C'; // Color amarillo
+        case 'Cerrado':
+            return '#000000'; // Color negro
+        default:
+            return '#B9A99C'; // Color negro por defecto
+    }
+}
+?>
 </body>
 
 </html>

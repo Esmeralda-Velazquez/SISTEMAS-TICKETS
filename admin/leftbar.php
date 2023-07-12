@@ -8,7 +8,7 @@
        </div>
        <div class="user-info">
          <div class="greeting">Bienvenid@</div>
-         <div class="username">Administrador</div>
+         <div class="username" style="font-size:20px;"><?php echo $_SESSION['alogin']; ?></div>
 
        </div>
      </div>

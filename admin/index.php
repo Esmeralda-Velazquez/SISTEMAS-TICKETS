@@ -5,6 +5,7 @@ include("dbconnection.php");
 if (isset($_POST['login'])) {
   $ret = mysqli_query($con, "SELECT * FROM admin WHERE name='" . $_POST['username'] . "' and password='" . $_POST['password'] . "'");
   $num = mysqli_fetch_array($ret);
+  echo $num; 
   if ($num > 0) {
     $extra = "home.php";
     $_SESSION['alogin'] = $_POST['username'];
@@ -26,7 +27,7 @@ if (isset($_POST['login'])) {
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta charset="utf-8" />
-  <title>CWEB Acceso Administrativo</title>
+  <title>IVRA Acceso Administrativo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta content="" name="description" />
   <meta content="" name="author" />

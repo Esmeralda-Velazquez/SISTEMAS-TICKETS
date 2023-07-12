@@ -124,7 +124,7 @@ check_login();
 						</div>
 					</div>
 				</div> -->
-				<div class="col-md-3 col-vlg-3 col-sm-6">
+				<div class="col-md-3 col-vlg-3 col-sm-6" style="width: 350px;">
 					<div class="tiles purple m-b-10">
 						<div class="tiles-body">
 							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
@@ -141,7 +141,7 @@ check_login();
 							<div class="widget-stats">
 								<div class="wrapper transparent">
 									<?php
-									$qr1 = mysqli_query($con, "select * from ticket where status='Open'");
+									$qr1 = mysqli_query($con, "select * from ticket where status='Abierto'");
 									$oq1 = mysqli_num_rows($qr1);
 									?>
 									<span class="item-title">Nuevo</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $oq1; ?>" data-animation-duration="700">0</span>
@@ -150,7 +150,16 @@ check_login();
 							<div class="widget-stats ">
 								<div class="wrapper last">
 									<?php
-									$qr2 = mysqli_query($con, "select * from ticket where status='closed'");
+									$qr2 = mysqli_query($con, "select * from ticket where status='En espera'");
+									$oq2 = mysqli_num_rows($qr2);
+									?>
+									<span class="item-title">En espera</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $oq2; ?>" data-animation-duration="700">0</span>
+								</div>
+							</div>
+							<div class="widget-stats ">
+								<div class="wrapper last">
+									<?php
+									$qr2 = mysqli_query($con, "select * from ticket where status='Cerrado'");
 									$oq2 = mysqli_num_rows($qr2);
 									?>
 									<span class="item-title">Cerrados</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $oq2; ?>" data-animation-duration="700">0</span>
