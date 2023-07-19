@@ -1,22 +1,24 @@
 <?php
 session_start();
-//echo $_SESSION['id'];
-//$_SESSION['msg'];
 include("dbconnection.php");
 include("checklogin.php");
 check_login();
+$userAdmin = $_SESSION['alogin'];
 
 if (isset($_POST['update'])) {
   $status = $_POST['statusUpdate'];
-  $assigned= $_POST['assignedUpdate'];
-  $adminremark = $_POST['aremark'];
+  $assigned = $_POST['assignedUpdate'];
+  $adminremark = 'esto se va a quitar';
   $fid = $_POST['frm_id'];
-  $userAdmin = $_SESSION['alogin'];
   print_r($status);
-  mysqli_query($con, "update ticket set admin_remark='$adminremark',status='$status', name_Admin='$userAdmin',assigned_user='$assigned' where id='$fid'");
-  echo '<script>alert("Ticket ha sido actualizado, correctamente"); location.replace(document.referrer)</script>';
+  mysqli_query($con, "UPDATE ticket SET admin_remark='$adminremark', status='$status', name_Admin='$userAdmin', assigned_user='$assigned' WHERE id='$fid'");
+  $comment = $_POST['aremark'];
+  mysqli_query($con, "INSERT INTO comments (ticket_id, coment, name_admin, commentdate) VALUES ('$fid', '$comment', '$userAdmin', NOW())");
+  echo '<script>alert("Ticket ha sido actualizado correctamente"); location.replace(document.referrer)</script>';
 }
 ?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -37,6 +39,7 @@ if (isset($_POST['update'])) {
   <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
   <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
   <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+  
 </head>
 
 <body class="">
@@ -133,7 +136,7 @@ if (isset($_POST['update'])) {
                         <div class="row" style="width: 800px;">
                         <?php
                         $rol= $_SESSION['alogin'];
-                          if ($rol === "admin") {
+                          if ($rol === "Carlos De La Cruz") {
                             ?>
                             <div class="col-md-6 col-xs-12">
                               <label class="col-md-6 col-xs-12 control-label"><strong style="color: #000000">Asignado:</strong></label>
@@ -180,32 +183,53 @@ if (isset($_POST['update'])) {
                         </div>
                         <br>
                         <div class="info-wrapper">
-                          <div class="info">Respuesta por 
-                            <?php echo $row['name_Admin']; ?>:
+                          <div class="info"> Comentario:   
                             <br>
                           </div>
                            <div class="clearfix"></div>
                         </div>
                        
                         <br>
-                        <textarea name="aremark" cols="50" rows="4"
-                           style="border:2px solid #193A63"><?php echo $row['admin_remark']; ?></textarea>
+                        <textarea name="aremark" cols="50" rows="2"style="border:2px solid #193A63"></textarea>
+                           
+                        <hr>                      
                         <hr>
-
                         <p class="small-text">
                           <input name="update" type="submit" class="txtbox1" id="Update" value="ACTUALIZAR" size="40" style="background-color: #193A63;color: #FFFFFF"/>
                           <input name="frm_id" type="hidden" id="frm_id" value="<?php echo $row['id']; ?>" />
                         </p>
                       </form>
+                      
                     </div>
-
                     <div class="clearfix"></div>
                   </div>
                   <div class="clearfix"></div>
                 </div>
-              
-              
                 <!--FIN FORMULARIO -->
+
+                <!-- AGREGAR COMENTARIOS -->
+                <div id="comments-container">
+                  <?php
+                  $idTicketActual = $row['id'];
+
+                  $commentsResult = mysqli_query($con, "SELECT * FROM comments WHERE ticket_id='$idTicketActual'");
+                  // Mostrar los comentarios
+                  while ($commentRow = mysqli_fetch_array($commentsResult)) {
+                    echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
+                    echo "<p>{$commentRow['commentdate']}</p>";
+                  ?>
+                     <script>
+                      setInterval(function() {
+                        actualizarComentarios(<?php echo $idTicketActual; ?>);
+                      }, 60000); // 60000 milisegundos = 1 minuto
+                    </script>
+                  <?php
+                  }
+                  ?>
+                </div>
+
+
+                
               </div>
             </div>
           </div>
@@ -222,8 +246,6 @@ if (isset($_POST['update'])) {
   </div>
   </div>
   </div>
-
-
   </div>
   </div>
   </div>
@@ -291,6 +313,24 @@ if (isset($_POST['update'])) {
   }
   ?>
 
+</script>
+
+<script>
+  function actualizarComentarios(idTicketActual) {
+    
+    console.log('ID del ticket actual: ' + idTicketActual);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("comments-container").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "get_comments.php?id=" + idTicketActual, true);
+    xhttp.send();
+  }
+
+</script>
 </body>
 
 </html>
