@@ -100,15 +100,32 @@ check_login();
                         <div class="user-profile-pic-wrapper">
                           <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/admin.png" data-src="assets/img/admin.png" src="assets/img/admin.png" alt="Admin"> </div>
                         </div>
-                        <p class="info" style="font-weight: bold; font-size: 15px; color:#0E3A88"><?php echo $row['name_Admin']; ?></p>
+                        <p class="info" style="font-weight: bold; font-size: 15px; color:#0E3A88">Respuestas: </p>
 
                         <div class="info-wrapper">
 
                           <br>
-                          <?php echo $row['admin_remark']; ?>
-                          <hr>
-                          <p class="small-text">Publicado en <?php echo $row['admin_remark_date']; ?></p>
-                          
+                          <?php //echo $row['admin_remark']; ?>
+                          <!-- <p class="small-text">Publicado en <?php //echo $row['admin_remark_date']; ?></p> -->
+                          <div id="comments-container">
+                          <?php
+                          $idTicketActual = $row['id'];
+
+                          $commentsResult = mysqli_query($con, "SELECT * FROM comments WHERE ticket_id='$idTicketActual'");
+                          // Mostrar los comentarios
+                          while ($commentRow = mysqli_fetch_array($commentsResult)) {
+                            echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
+                            echo "<p>{$commentRow['commentdate']}</p>";
+                          ?>
+                            <script>
+                              setInterval(function() {
+                                actualizarComentarios(<?php echo $idTicketActual; ?>);
+                              }, 60000); // 60000 milisegundos = 1 minuto
+                            </script>
+                          <?php
+                          }
+                          ?>
+                        </div>
                         </div>
                         <div class="clearfix"></div>
                       </div>
@@ -177,5 +194,20 @@ function getColorByStatus($status) {
 }
 ?>
 </body>
-
 </html>
+<script>
+  function actualizarComentarios(idTicketActual) {
+    
+    console.log('ID del ticket actual: ' + idTicketActual);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("comments-container").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "get_comments.php?id=" + idTicketActual, true);
+    xhttp.send();
+  }
+
+</script>
