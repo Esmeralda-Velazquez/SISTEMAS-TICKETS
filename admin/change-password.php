@@ -13,7 +13,6 @@ if (isset($_POST['change'])) {
   if ($num > 0) {
     $con = mysqli_query($con, "UPDATE  admin set password='$newpassword' where id='$adminid'");
     echo '<script>alert("La contraseña ha sido actualizada correctamente."); location.replace(document.referrer)</script>';
-    //header('location:user.php');
   } else {
     $_SESSION['msg1'] = "Contraseña anterior no coincide !!";
   }
