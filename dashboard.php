@@ -8,6 +8,7 @@ include("dbconnection.php");
 <html>
 
 <head>
+ <link rel="icon" type="image/png" href="assets/img/icon.png"/>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta charset="utf-8" />
   <title>IVRA Dashboard </title>
@@ -57,20 +58,6 @@ include("dbconnection.php");
               </div>
             </div>
           </div>
-          <!-- <div class="col-md-6 col-sm-6 spacing-bottom-sm spacing-bottom">
-            <div class="tiles green added-margin">
-              <div class="tiles-body">
-                <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
-                <?php //$prequest = mysqli_query($con, "select * from prequest where email='" . $_SESSION['login'] . "'");
-                //$pnum = mysqli_num_rows($prequest);
-                ?>
-                <div class="heading"> <span class="fa fa-ticket"></span>
-                  <a href="get-quote.php" style="color:#FFF">Total de Consultas</a>
-                </div>
-                <h3 class="text-right text-white"><span class="animate-number" data-value="<?php //echo $num; ?>" data-animation-duration="1200"><?= $pnum ?></span></h3>
-              </div>
-            </div>
-          </div> -->
         </div>
 
       </div>

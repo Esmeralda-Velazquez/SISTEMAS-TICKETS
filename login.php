@@ -6,8 +6,8 @@ if (isset($_POST['login'])) {
   $ret = mysqli_query($con, "SELECT * FROM user WHERE user='" . $_POST['user'] . "' and password='" . $_POST['password'] . "'");
   $num = mysqli_fetch_array($ret);
   if ($num > 0) {
-    $_SESSION['login'] = $_POST['user'];
     $_SESSION['id'] = $num['id'];
+    $_SESSION['login'] = $_POST['user'];
     $_SESSION['name'] = $num['name'];
     $_SESSION['area'] = $num['area'];
     $val3 = date("Y/m/d");
@@ -39,6 +39,7 @@ if (isset($_POST['login'])) {
 <html>
 
 <head>
+<link rel="icon" type="image/png" href="assets/img/icon.png"/>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta charset="utf-8" />
   <title>IVRA Login</title>

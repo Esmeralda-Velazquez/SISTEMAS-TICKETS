@@ -10,6 +10,7 @@ check_login();
 <html>
 
 <head>
+<link rel="icon" type="image/png" href="assets/img/icon.png"/>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta charset="utf-8" />
   <title>Usuario | Tickets de Soporte</title>
@@ -66,6 +67,12 @@ check_login();
       $num = mysqli_num_rows($rt);
       if ($num > 0) {
 
+        $user_id = $_SESSION['login'];
+          $estadoResult = mysqli_query($con, "SELECT * FROM ticket WHERE respuesta=0 AND email_id='$user_id' AND status='Cerrado'");
+            while ($estadoRow = mysqli_fetch_array($estadoResult)) {
+              echo "<script>alert('Ticket ID: {$estadoRow['ticket_id']}');</script>";
+               }
+
         while ($row = mysqli_fetch_array($rt)) {
       ?>
           <div class="row">
@@ -93,6 +100,30 @@ check_login();
                     <div class="clearfix"></div>
                   </div>
                   <br>
+                  <div id="comments-container">
+                    <p class="info" style="font-weight: bold; font-size: 15px; color:#0E3A88">Respuesta: </p>     
+                       <?php
+                        $idTicketActual = $row['id'];
+                        $commentsResult = mysqli_query($con, "SELECT * FROM comments WHERE ticket_id='$idTicketActual'");
+                          // Mostrar los comentarios
+                            while ($commentRow = mysqli_fetch_array($commentsResult)) {
+                              echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
+                              echo "<p>{$commentRow['commentdate']}</p>";
+                            ?>
+                               <script>
+
+                                setInterval(function() {
+
+                                  location.reload();
+ 
+                                  //actualizarComentarios(<?php //echo $idTicketActual; ?>);
+                                }, 60000); 
+                                
+                              </script>
+                            <?php
+                            }
+                            ?>
+                          </div>
 
                   <?php if ($row['admin_remark'] != '') : ?>
                     <div class="form-actions">
@@ -100,32 +131,10 @@ check_login();
                         <div class="user-profile-pic-wrapper">
                           <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/admin.png" data-src="assets/img/admin.png" src="assets/img/admin.png" alt="Admin"> </div>
                         </div>
-                        <p class="info" style="font-weight: bold; font-size: 15px; color:#0E3A88">Respuestas: </p>
-
                         <div class="info-wrapper">
-
                           <br>
                           <?php //echo $row['admin_remark']; ?>
-                          <!-- <p class="small-text">Publicado en <?php //echo $row['admin_remark_date']; ?></p> -->
-                          <div id="comments-container">
-                          <?php
-                          $idTicketActual = $row['id'];
-
-                          $commentsResult = mysqli_query($con, "SELECT * FROM comments WHERE ticket_id='$idTicketActual'");
-                          // Mostrar los comentarios
-                          while ($commentRow = mysqli_fetch_array($commentsResult)) {
-                            echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
-                            echo "<p>{$commentRow['commentdate']}</p>";
-                          ?>
-                            <script>
-                              setInterval(function() {
-                                actualizarComentarios(<?php echo $idTicketActual; ?>);
-                              }, 60000); // 60000 milisegundos = 1 minuto
-                            </script>
-                          <?php
-                          }
-                          ?>
-                        </div>
+                          <!-- <p class="small-text">Publicado en <?php //echo $row['admin_remark_date']; ?></p> --> 
                         </div>
                         <div class="clearfix"></div>
                       </div>
@@ -136,6 +145,7 @@ check_login();
                 </div>
               </div>
             <?php }
+            
         } else { ?>
             <h3 align="center" style="color:red;">Sin registros que mostrar</h3>
           <?php } ?>
@@ -195,7 +205,8 @@ function getColorByStatus($status) {
 ?>
 </body>
 </html>
-<script>
+
+<script>// NO SE UTILIAZA POR EL MOMENTO 
   function actualizarComentarios(idTicketActual) {
     
     console.log('ID del ticket actual: ' + idTicketActual);

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+<link rel="icon" type="image/png" href="assets/img/icon.png"/>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -42,7 +42,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="admin/">Acceso Admin</a>
+            <a class="nav-link" href="admin/index.php">Acceso Admin</a>
           </li>
         </ul>
       </div>

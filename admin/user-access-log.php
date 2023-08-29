@@ -75,7 +75,6 @@ check_login();
                     <tr>
                       <td class="v-align-middle"><?php echo $row['user_id']; ?></td>
                       <td class="v-align-middle"><?php echo $row['username']; ?></td>
-                     
                       <td class="v-align-middle"><?php echo $row['logindate']; ?> | <?php echo $row['logintime']; ?> </td>
 
                     </tr>

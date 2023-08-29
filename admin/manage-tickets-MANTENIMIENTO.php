@@ -10,7 +10,7 @@ if (isset($_POST['update'])) {
   $assigned = $_POST['assignedUpdate'];
   $fid = $_POST['frm_id'];
   print_r($status);
-  mysqli_query($con, "UPDATE ticket SET status='$status', name_Admin='$userAdmin', area_asig='$assigned' WHERE id='$fid'");
+  mysqli_query($con, "UPDATE ticket SET status='$status', name_Admin='$userAdmin', assigned_user='$assigned' WHERE id='$fid'");
   
   $comment = $_POST['aremark'];
   if($comment !=""){
@@ -82,12 +82,12 @@ $lastTicketId = $row['max_id'];
   
       <!------------------------------------------------------------------------------------------------------->
       <?php
-      $statuses = array('Abierto', 'Visto','En espera','COMPRAS','Cerrado',);
+      $statuses = array('Abierto', 'Visto','En Espera','Cerrado');
       foreach ($statuses as $status) {
 
         echo '<div class="column">';
         echo '<h3 style="color: #2b4c7e;"><strong>' . $status . '</strong></h3>';
-        $rt = mysqli_query($con, "SELECT * FROM ticket WHERE status = '$status' AND (area_asig IS NULL OR area_asig = 'TI') ORDER BY id DESC");
+        $rt = mysqli_query($con, "SELECT * FROM ticket WHERE status = '$status' and area_asig = 'MANTENIMIENTO' ORDER BY id DESC");
         while ($row = mysqli_fetch_array($rt)) {
           ?>
           <div class="row">
@@ -100,14 +100,14 @@ $lastTicketId = $row['max_id'];
                   </h4>
                   <p style="width:700px"><span class="text-success bold">Ticket #
                       <?php echo $_SESSION['sid'] = $row['ticket_id']; ?>
-                    </span> - .Fecha de creación
+                    </span> - Fecha de creación
                     <?php echo $row['posting_date']; ?>
                     <span class="label label-important"
                       style="background-color: <?php echo getColorByStatus($row['status']); ?>"><?php echo $row['status']; ?></span>
                     <span class="label label-important"
                       style="background-color: <?php echo getColorByPrioprity($row['prioprity']); ?>"><?php echo $row['prioprity']; ?></span>
                       <span class="label label-important"
-                      style="background-color: #000000;"><?php echo $row['area_asig']; ?></span>
+                      style="background-color: #000000;"><?php echo $row['assigned_user']; ?></span>
                   </p>
                   <div class="actions"> <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a> </div>
                 </div>
@@ -148,20 +148,21 @@ $lastTicketId = $row['max_id'];
                       <div class="col-md-6 col-xs-12">
   
                         <form name="adminr" method="post" enctype="multipart/form-data">
+  
                           <div class="row" style="width: 800px;">
                           <?php
-                          $rol= $_SESSION['area'];
-                            if ($rol === "TI") {
+                          $rol= $_SESSION['alogin'];
+                            if ($rol === "Carlos De La Cruz") {
                               ?>
                               <div class="col-md-6 col-xs-12">
                                 <label class="col-md-6 col-xs-12 control-label"><strong style="color: #000000">Asignado:</strong></label>
                                 <div class="col-md-6 col-xs-12">
                                   <select name="assignedUpdate" class="form-control select" required>
                                     <?php
-                                    $sql2 = "SELECT DISTINCT area FROM admin";
+                                    $sql2 = "SELECT * FROM admin";
                                     $result = $con->query($sql2);
                                     while ($row2 = $result->fetch_assoc()) {
-                                      $atender = htmlspecialchars($row2["area"]);
+                                      $atender = htmlspecialchars($row2["name"]);
                                       echo "<option value=\"$atender\">$atender</option>";
                                     }
                                     ?>

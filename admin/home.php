@@ -109,7 +109,7 @@ check_login();
 								<div class="wrapper transparent">
 									<?php //$rt = mysqli_query($con, "select * from user");
 									//$rw = mysqli_num_rows($rt); ?>
-									<span class="item-title">All</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $rw; ?>" data- animation-duration="700">0</span>
+									<span class="item-title">All</span> <span class="item-count animate-number semi-bold" data-value="<?php //echo $rw; ?>" data- animation-duration="700">0</span>
 								</div>
 							</div>
 							<div class="widget-stats ">
@@ -118,7 +118,7 @@ check_login();
 									//$utd = date('Y-m-d');
 									//$rt1 = mysqli_query($con, "select * from user where posting_date='$utd'");
 									//$rw1 = mysqli_num_rows($rt1); ?>
-									<span class="item-title">Hoy</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $rw1; ?>" data-animation-duration="700">0</span>
+									<span class="item-title">Hoy</span> <span class="item-count animate-number semi-bold" data-value="<?php //echo $rw1; ?>" data-animation-duration="700">0</span>
 								</div>
 							</div>
 						</div>
@@ -181,7 +181,7 @@ check_login();
 									<?php //$vt = mysqli_query($con, "select * from ticket");
 									//$ovt = mysqli_num_rows($vt);
 									?>
-									<span class="item-title">Todos</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $ovt; ?>" data-animation-duration="700">0</span>
+									<span class="item-title">Todos</span> <span class="item-count animate-number semi-bold" data-value="" data-animation-duration="700">0</span>
 								</div>
 							</div>
 
@@ -197,7 +197,7 @@ check_login();
 
 
 
-									<span class="item-title">Pendiente</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $otv1; ?>" data-animation-duration="700">0</span> <?php
+									<span class="item-title">Pendiente</span> <span class="item-count animate-number semi-bold" data-value="<?php //echo $otv1; ?>" data-animation-duration="700">0</span> <?php
 
 																																																			?>
 								</div>

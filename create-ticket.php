@@ -18,16 +18,12 @@ if (isset($_POST['send'])) {
     $area = $_SESSION['area'];
     $subject = $_POST['subject'];
 
-
     $tt = $_POST['tasktype']. " " . $_POST['equipoOption']. " ". $_POST['programasOption'];
 
     $priority = $_POST['priority'];
     $ticket = $_POST['description'];
-    //$ticfile=$_FILES["tfile'"]["name"];
     $st = "Abierto";
-    $pdate = date('Y-m-d');
-    //move_uploaded_file($_FILES["tfile"]["tmp_name"],"ticketfiles/".$_FILES["tfile"]["name"]);
-    $a = mysqli_query($con, "insert into ticket(ticket_id,email_id,subject,task_type,prioprity,ticket,status,posting_date,name,area)  values('$tid','$user','$subject','$tt','$priority','$ticket','$st','$pdate','$name','$area')");
+    $a = mysqli_query($con, "insert into ticket(ticket_id,email_id,subject,task_type,prioprity,ticket,status,posting_date,name,area,respuesta)  values('$tid','$user','$subject','$tt','$priority','$ticket','$st',NOW(),'$name','$area',0)");
     if ($a) {
         echo "<script>alert('Ticket Registrado Correctamente'); location.replace(document.referrer)</script>";
     }
@@ -38,6 +34,7 @@ if (isset($_POST['send'])) {
 <html>
 
 <head>
+    <link rel="icon" type="image/png" href="assets/img/icon.png"/>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
     <title>CWEB Crear Ticket</title>
@@ -120,10 +117,14 @@ if (isset($_POST['send'])) {
                                             <option value="">Seleccionar</option>
                                             <option value="Monitor">Monitor</option>
                                             <option value="Teclado">Teclado</option>
+                                            <option value="Mouse">Mouse</option>
                                             <option value="CPU">CPU</option>
                                             <option value="Impresora">Impresora</option>
                                             <option value="Control de acceso">Control de acceso</option>
                                             <option value="CCTV">CCTV</option>
+                                            <option value="Telefono">Telefono</option>
+                                            <option value="Otro">Otro</option>
+                                            
                                             </select>
                                         </div>
 
@@ -140,6 +141,12 @@ if (isset($_POST['send'])) {
                                             <option value="Camaras">Camaras</option>
                                             <option value="Windows">Windows</option>
                                             <option value="Antivirus">Antivirus</option>
+                                            <option value="Silvasoft">Silvasoft</option>
+                                            <option value="Apple Cubos">Apple Cubos</option>
+                                            <option value="StrawBerry">StrawBerry</option>
+                                            <option value="Cherry">Cherry</option>
+                                            <option value="BlackBerry">BlackBerry</option>
+                                            <option value="Otro">Otro</option>
                                             </select>
                                         </div>
                                     </div>
