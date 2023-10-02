@@ -27,10 +27,10 @@
        <li><a href="user-access-log.php"><span class="fa fa-users"></span>&nbsp;&nbsp;Registro de Acceso de Usuarios</a></li>
        <li><a href="manage-users.php"><span class="fa fa-users"></span> Usuarios</a></li>
        <li><a href="change-password.php"><span class="fa fa-file-text-o"></span> Cambiar Contraseña</a></li>
-       <li><a href="logout.php" style="color: while;"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Cerrar Sesión</a></li>
+       <li><a href="logout.php" style="color: while;"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Cerrar Sesión</a></li> 
         <?php endif; ?>
         <?php if ($_SESSION['area'] === 'ERP SILVA' || $_SESSION['area'] === 'COMPRAS' || $_SESSION['area'] === 'MANTENIMIENTO') : ?>
-       <li><a href="logout.php" style="color: while;"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Cerrar Sesión</a></li>
+       <li><a href="logout.php" style="color: while;"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Cerrar Sesión</a></li> 
         <?php endif; ?>
        </li>
       </ul>

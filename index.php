@@ -28,7 +28,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand">GESTOR DE TICKETS TI</a>
+      <a class="navbar-brand">GESTOR DE TICKETS</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -38,11 +38,11 @@
             <a class="nav-link" href="registration.php">Regístrate</a>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Acceder</a>
+            <a class="nav-link" href="login.php">Usuario</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="admin/index.php">Acceso Admin</a>
+            <a class="nav-link" href="admin/index.php">Administrador</a>
           </li>
         </ul>
       </div>

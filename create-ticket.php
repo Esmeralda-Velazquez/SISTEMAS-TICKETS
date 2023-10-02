@@ -18,15 +18,50 @@ if (isset($_POST['send'])) {
     $area = $_SESSION['area'];
     $subject = $_POST['subject'];
 
-    $tt = $_POST['tasktype']. " " . $_POST['equipoOption']. " ". $_POST['programasOption'];
+    $tt = $_POST['tasktype'];
 
+    if ($_POST['tasktype'] === "Equipo-") {
+        $tt .= " " . $_POST['equipoOption'];
+    } elseif ($_POST['tasktype'] === "Programa-") {
+        $tt .= " " . $_POST['programasOption'];
+    } elseif ($_POST['tasktype'] === "Reparacion-") {
+        $tt .= " " . $_POST['reparacionOption'];
+    } elseif ($_POST['tasktype'] === "Compras-") {
+        $tt .= " " . $_POST['comprasOption'];
+    }
     $priority = $_POST['priority'];
     $ticket = $_POST['description'];
     $st = "Abierto";
-    $a = mysqli_query($con, "insert into ticket(ticket_id,email_id,subject,task_type,prioprity,ticket,status,posting_date,name,area,respuesta)  values('$tid','$user','$subject','$tt','$priority','$ticket','$st',NOW(),'$name','$area',0)");
-    if ($a) {
-        echo "<script>alert('Ticket Registrado Correctamente'); location.replace(document.referrer)</script>";
+    // Verifica si se envió un archivo adjunto
+    if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+        $adminDir = 'admin/';
+        $uploadDir = 'uploads/';
+        $fullUploadDir = $adminDir . $uploadDir; // Directorio donde deseas guardar los archivos adjuntos
+        $uploadFile = $fullUploadDir . basename($_FILES['attachment']['name']);
+
+        if (move_uploaded_file($_FILES['attachment']['tmp_name'], $uploadFile)) {
+            // Obtén la ruta del archivo adjunto
+            $archivo_adj = $uploadFile;
+        } else {
+            // Ocurrió un error al cargar el archivo, puedes manejar el error aquí si lo deseas.
+            echo "<script>alert('Error al cargar el archivo adjunto'); location.replace(document.referrer)</script>";
+            exit; // Detiene la ejecución del script si hay un error.
+        }
+    } else {
+        // No se ha enviado un archivo adjunto, establece $archivo_adj en null o un valor predeterminado.
+        $archivo_adj = null; 
     }
+
+    // Inserta los datos en la base de datos (incluso si no hay archivo adjunto)
+    $stmt = mysqli_prepare($con, "INSERT INTO ticket (ticket_id, email_id, subject, task_type, prioprity, ticket, status, posting_date, name, area, respuesta, archivo_adj) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, 0, ?)");
+    mysqli_stmt_bind_param($stmt, "ssssssssss", $tid, $user, $subject, $tt, $priority, $ticket, $st, $name, $area, $archivo_adj);
+
+    if (mysqli_stmt_execute($stmt)) {
+        echo "<script>alert('Ticket Registrado Correctamente'); location.replace(document.referrer)</script>";
+    } else {
+        echo "<script>alert('Error al registrar el ticket'); location.replace(document.referrer)</script>";
+    }
+    mysqli_stmt_close($stmt);
 }
 ?>
 
@@ -79,7 +114,7 @@ if (isset($_POST['send'])) {
                 <div class="row">
                     <div class="col-md-12">
 
-                        <form class="form-horizontal" name="form1" method="post" action="" onSubmit="return valid();">
+                        <form class="form-horizontal" name="form1" method="post" action="" onSubmit="return valid();" enctype="multipart/form-data">
                             <div class="panel panel-default">
 
                                 <div class="panel-body bg-white">
@@ -106,7 +141,9 @@ if (isset($_POST['send'])) {
                                             <option value="Equipo-">Equipo</option>
                                             <option value="Programa-">Programas</option>
                                             <option value="Internet">Internet</option>
-                                            </select>
+                                            <option value="Reparacion-">Reparacion</option> 
+                                            <option value="Compras-">Compras</option>    
+                                        </select>
                                         </div>
                                         </div>
 
@@ -149,6 +186,31 @@ if (isset($_POST['send'])) {
                                             <option value="Otro">Otro</option>
                                             </select>
                                         </div>
+                                        <div id="reparacionOptions" style="display: none;">
+                                            <label>Reparacion:</label>
+                                            <select name="reparacionOption" class="form-control select">
+                                            <option value="">Seleccionar</option>
+                                            <option value="Oficna">Oficinas</option>
+                                            <option value="Bodega">Bodega</option>
+                                            <option value="Baños">Baños</option>
+                                            <option value="Comedor">Comedor</option>
+                                            <option value="Caseta">Caseta</option>
+                                            <option value="Otros">Otros</option>
+                                            
+                                            </select>
+                                        </div>
+                                        <div id="comprasOptions" style="display: none;">
+                                            <label>Compras:</label>
+                                            <select name="comprasOption" class="form-control select">
+                                            <option value="">Seleccionar</option>
+                                            <option value="Mantenimiento">Mantenimiento</option>
+                                            <option value="Computo">Computo</option>
+                                            <option value="Papeleria">Suministros de Papeleria</option>
+                                            <option value="Toners">Suministros de Toners</option>
+                                            <option value="Insumos">Compras Generales</option>
+                                            <option value="Otros">Otros</option>      
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
@@ -172,18 +234,14 @@ if (isset($_POST['send'])) {
 
                                         </div>
                                     </div>
-
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Adjuntar Archivo</label>
+                                        <div class="col-md-6 col-xs-12">
+                                        <input type="file" name="attachment" class="form-control" />
+                                    </div>
+                                    </div>
 
                                 </div>
-
-
-
-
-
-
-
-
-
                             </div>
 
                             <div class="panel-footer">
@@ -218,15 +276,23 @@ if (isset($_POST['send'])) {
     var subOptions = document.getElementById("subOptions");
     var equipoOptions = document.getElementById("equipoOptions");
     var programasOptions = document.getElementById("programasOptions");
+    var reparacionOptions = document.getElementById("reparacionOptions");
+    var comprasOptions = document.getElementById("comprasOptions");
 
     // Ocultar todas las opciones secundarias
     equipoOptions.style.display = "none";
     programasOptions.style.display = "none";
+    reparacionOptions.style.display = "none";
+    comprasOptions.style.display = "none";
 
     if (selectedValue === "Equipo-") {
       equipoOptions.style.display = "block";
     } else if (selectedValue === "Programa-") {
       programasOptions.style.display = "block";
+    }else if (selectedValue === "Reparacion-") {
+      reparacionOptions.style.display = "block";
+    } else if (selectedValue === "Compras-") {
+      comprasOptions.style.display = "block";
     }
 
     // Mostrar las opciones secundarias

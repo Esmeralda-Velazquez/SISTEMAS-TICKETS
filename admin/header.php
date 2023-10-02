@@ -26,7 +26,6 @@
       <div class="pull-right">
        <ul class="nav quick-section">
         <li class="quicklinks">
-          <li><a href="logout.php"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Cerrar Sesión</a></li>       
         </li>
        </ul>
       </div>
