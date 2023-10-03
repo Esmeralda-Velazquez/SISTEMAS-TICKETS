@@ -58,7 +58,10 @@ $lastTicketId = $row['max_id'];
 <input type="hidden" id="lastTicketId" value="<?php echo $lastTicketId; ?>">
 
 <body class="">
-  <script src="./check_new_ticket.js"></script>
+<script src="./notific_permiso.js"></script>
+<script src="./js/push.min.js"></script>
+<script src="./check_new_ticket.js"></script>
+<div id="notificacion-container"></div>
   <?php include("header.php"); ?>
   <div class="page-container row">
 
@@ -116,15 +119,16 @@ $lastTicketId = $row['max_id'];
                     - Fecha de Finalización:
                     <?php echo $row['closing_date']; ?>
                   <?php endif; ?><br>
-                  <span class="label label-important" style="background-color: <?php echo getColorByStatus($row['status']); ?>"> 
-                    <?php echo $row['status']; ?>
-                  </span>
-                  <span class="label label-important" style="background-color: <?php echo getColorByPrioprity($row['prioprity']); ?>">
-                    <?php echo $row['prioprity']; ?>
-                  </span>
-                  <span class="label label-important" style="background-color: #000000;">
-                    <?php echo $row['area_asig']; ?>
-                  </span>
+                  <span class="label label-important" style="background-color: <?php echo getColorByStatus($row['status']); ?>; margin: 2px;">
+  <?php echo $row['status']; ?>
+</span>
+<span class="label label-important" style="background-color: <?php echo getColorByPrioprity($row['prioprity']); ?>; margin: 2px;">
+  <?php echo $row['prioprity']; ?>
+</span>
+<span class="label label-important" style="background-color: #000000; margin: 2px;">
+  <?php echo $row['area_asig']; ?>
+</span>
+
                 </p>
                 <div class="actions">
                   <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a>
