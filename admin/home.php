@@ -20,8 +20,10 @@ check_login();
 	<link rel="stylesheet" type="text/css" href="../assets/plugins/owl-carousel/owl.carousel.css" />
 	<link rel="stylesheet" type="text/css" href="../assets/plugins/owl-carousel/owl.theme.css" />
 	<link href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen">
+	<link href="../assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css"
+		media="screen" />
+	<link rel="stylesheet" href="../assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css"
+		media="screen">
 	<link rel="stylesheet" href="../assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen">
 	<link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="../assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
@@ -67,18 +69,20 @@ check_login();
 				<div class="col-md-3 col-vlg-3 col-sm-6">
 					<div class="tiles green m-b-10">
 						<div class="tiles-body">
-							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
+							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
+									class="remove"></a> </div>
 							<div class="tiles-title ">Visitantes </div>
+							<br>
 							<div class="widget-stats">
 								<div class="wrapper transparent">
 									<?php $ov = mysqli_query($con, "select * from usercheck");
 									$num = mysqli_num_rows($ov);
 									?>
-									<span class="item-title">General</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $num; ?>" data-animation-duration="700">0</span>
+									<span class="item-title">General</span> <span
+										class="item-count animate-number semi-bold" data-value="<?php echo $num; ?>"
+										data-animation-duration="700">0</span>
 								</div>
 							</div>
-
-
 							<div class="widget-stats ">
 								<div class="wrapper last">
 									<?php
@@ -88,9 +92,12 @@ check_login();
 									$num11 = mysqli_num_rows($tv1);
 									?>
 
-									<span class="item-title">Hoy</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $num11; ?>" data-animation-duration="700">0</span> <?php
+									<span class="item-title">Hoy</span> <span
+										class="item-count animate-number semi-bold" data-value="<?php echo $num11; ?>"
+										data-animation-duration="700">0</span>
+									<?php
 
-																																																	?>
+									?>
 								</div>
 							</div>
 
@@ -100,42 +107,22 @@ check_login();
 
 
 				</div>
-				<!-- <div class="col-md-3 col-vlg-3 col-sm-6">
-					<div class="tiles blue m-b-10">
-						<div class="tiles-body">
-							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
-							<div class="tiles-title ">Usuarios Registrados </div>
-							<div class="widget-stats">
-								<div class="wrapper transparent">
-									<?php //$rt = mysqli_query($con, "select * from user");
-									//$rw = mysqli_num_rows($rt); ?>
-									<span class="item-title">All</span> <span class="item-count animate-number semi-bold" data-value="<?php //echo $rw; ?>" data- animation-duration="700">0</span>
-								</div>
-							</div>
-							<div class="widget-stats ">
-								<div class="wrapper last">
-									<?php
-									//$utd = date('Y-m-d');
-									//$rt1 = mysqli_query($con, "select * from user where posting_date='$utd'");
-									//$rw1 = mysqli_num_rows($rt1); ?>
-									<span class="item-title">Hoy</span> <span class="item-count animate-number semi-bold" data-value="<?php //echo $rw1; ?>" data-animation-duration="700">0</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
-				<div class="col-md-3 col-vlg-3 col-sm-6" style="width: 350px;">
+				<div class="col-md-3 col-vlg-3 col-sm-6" style="width: 320px;">
 					<div class="tiles purple m-b-10">
 						<div class="tiles-body">
-							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
+							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
+									class="remove"></a> </div>
 							<div class="tiles-title ">Tickets </div>
+							<br>
 							<div class="widget-stats">
 								<div class="wrapper transparent">
 									<?php
 									$qr = mysqli_query($con, "select * from ticket");
 									$oq = mysqli_num_rows($qr);
 									?>
-									<span class="item-title">General</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $oq ?>" data-animation-duration="700">0</span>
+									<span class="item-title">General</span> <span
+										class="item-count animate-number semi-bold" data-value="<?php echo $oq ?>"
+										data-animation-duration="700">0</span>
 								</div>
 							</div>
 							<div class="widget-stats">
@@ -144,7 +131,9 @@ check_login();
 									$qr1 = mysqli_query($con, "select * from ticket where status='Abierto'");
 									$oq1 = mysqli_num_rows($qr1);
 									?>
-									<span class="item-title">Nuevo</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $oq1; ?>" data-animation-duration="700">0</span>
+									<span class="item-title">Nuevo</span> <span
+										class="item-count animate-number semi-bold" data-value="<?php echo $oq1; ?>"
+										data-animation-duration="700">0</span>
 								</div>
 							</div>
 							<div class="widget-stats ">
@@ -153,7 +142,9 @@ check_login();
 									$qr2 = mysqli_query($con, "select * from ticket where status='En espera'");
 									$oq2 = mysqli_num_rows($qr2);
 									?>
-									<span class="item-title">En espera</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $oq2; ?>" data-animation-duration="700">0</span>
+									<span class="item-title">En espera</span> <span
+										class="item-count animate-number semi-bold" data-value="<?php echo $oq2; ?>"
+										data-animation-duration="700">0</span>
 								</div>
 							</div>
 							<div class="widget-stats ">
@@ -162,66 +153,71 @@ check_login();
 									$qr2 = mysqli_query($con, "select * from ticket where status='Cerrado'");
 									$oq2 = mysqli_num_rows($qr2);
 									?>
-									<span class="item-title">Cerrados</span> <span class="item-count animate-number semi-bold" data-value="<?php echo $oq2; ?>" data-animation-duration="700">0</span>
+									<span class="item-title">Cerrados</span> <span
+										class="item-count animate-number semi-bold" data-value="<?php echo $oq2; ?>"
+										data-animation-duration="700">0</span>
 								</div>
 							</div>
-
-
 						</div>
 					</div>
 				</div>
-
-				<!-- <div class="col-md-3 col-vlg-3 col-sm-6">
+				<!--Apartado de calculo de tiempo de espera -->
+               <div class="col-md-3 col-vlg-3 col-sm-6" style="width: 390px; ">
 					<div class="tiles red m-b-10">
 						<div class="tiles-body">
-							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
-							<div class="tiles-title ">Tickets </div>
+							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
+									class="remove"></a> </div>
+							<div class="tiles-title " style=' font-size: 14px;'>Tiempo promedio de atención de tickets por hora </div>
 							<div class="widget-stats">
 								<div class="wrapper transparent">
-									<?php //$vt = mysqli_query($con, "select * from ticket");
-									//$ovt = mysqli_num_rows($vt);
-									?>
-									<span class="item-title">Todos</span> <span class="item-count animate-number semi-bold" data-value="" data-animation-duration="700">0</span>
-								</div>
-							</div>
-
-
-							<div class="widget-stats ">
-								<div class="wrapper last">
 									<?php
-									//$tdate = date("Y/m/d");
-
-									//$otv = mysqli_query($con, "select * from ticket where status='Open'");
-									//$otv1 = mysqli_num_rows($otv);
+									$qr = mysqli_query($con, "SELECT AVG(TIMESTAMPDIFF(HOUR, posting_date, closing_date)) AS promedio_horas, AVG(TIMESTAMPDIFF(DAY, posting_date, closing_date)) AS promedio_dias FROM ticket WHERE closing_date IS NOT NULL AND status = 'cerrado' AND MONTH(posting_date) = MONTH(CURRENT_DATE) AND YEAR(posting_date) = YEAR(CURRENT_DATE) AND area_asig = 'TI';");
+									$respuesta = mysqli_fetch_assoc($qr)
+									
 									?>
-
-
-
-									<span class="item-title">Pendiente</span> <span class="item-count animate-number semi-bold" data-value="<?php //echo $otv1; ?>" data-animation-duration="700">0</span> <?php
-
-																																																			?>
+									<span class="item-title">TI</span> 
+									<span class="item-count animate-number semi-bold" data-value="<?php echo number_format($respuesta['promedio_horas'],2)?>"
+										data-animation-duration="700">0</span>
 								</div>
 							</div>
-
-
+							<div class="widget-stats">
+								<div class="wrapper transparent">
+									<?php
+									$qr = mysqli_query($con, "SELECT AVG(TIMESTAMPDIFF(HOUR, posting_date, closing_date)) AS promedio_horas, AVG(TIMESTAMPDIFF(DAY, posting_date, closing_date)) AS promedio_dias FROM ticket WHERE closing_date IS NOT NULL AND status = 'cerrado' AND MONTH(posting_date) = MONTH(CURRENT_DATE) AND YEAR(posting_date) = YEAR(CURRENT_DATE) AND area_asig = 'COMPRAS';");
+									$respuesta = mysqli_fetch_assoc($qr)
+									
+									?>
+									<span class="item-title">COMPRAS</span> 
+									<span class="item-count animate-number semi-bold" data-value="<?php echo number_format($respuesta['promedio_horas'],2)?>"
+										data-animation-duration="700">0</span>
+								</div>
+							</div>
+							<div class="widget-stats">
+								<div class="wrapper transparent">
+									<?php
+									$qr = mysqli_query($con, "SELECT AVG(TIMESTAMPDIFF(HOUR, posting_date, closing_date)) AS promedio_horas, AVG(TIMESTAMPDIFF(DAY, posting_date, closing_date)) AS promedio_dias FROM ticket WHERE closing_date IS NOT NULL AND status = 'cerrado' AND MONTH(posting_date) = MONTH(CURRENT_DATE) AND YEAR(posting_date) = YEAR(CURRENT_DATE) AND area_asig = 'MANTENIMIENTO';");
+									$respuesta = mysqli_fetch_assoc($qr)
+									
+									?>
+									<span class="item-title">MANTENIMIENTO</span> 
+									<span class="item-count animate-number semi-bold" data-value=" <?php echo number_format($respuesta['promedio_horas'],2)?>"
+										data-animation-duration="700">0</span>
+								</div>
+							</div>
 						</div>
 					</div>
-
-
-				</div> -->
-
+				</div>
 			</div>
-
 		</div>
+		<button class="btn-descarga" onclick="descargarExcel()">Descargar reporte mensual</button>
+
 		<!-- END DASHBOARD TILES -->
 		<!-- START DASHBOARD CHART -->
-
-
-
 		<div class="col-lg-12" style="min-height:280px;">
 			<div class="panel panel-red">
 				<div class="panel-heading">
-					<h3 class="panel-title" style="color:#193A63;"><i class="fa fa-long-arrow-right"></i> Todas las Visitas de Usuario</h3>
+					<h3 class="panel-title" style="color:#193A63;"><i class="fa fa-long-arrow-right"></i> Todas las
+						Visitas de Usuario</h3>
 
 					<script type="text/javascript">
 						var visitorsCount = [];
@@ -240,19 +236,17 @@ check_login();
 							} else {
 								$month_array[$i] = 0;
 							}
-					?>
+							?>
 							<script type="text/javascript">
 								var myKey = "Day " + '<?php echo $i; ?>';
 
 								myCat.push(myKey);
 							</script>
-						<?php
+							<?php
 
 						}
 					}
-					//print_r($month_array);
 					$results = mysqli_query($con, "SELECT logindate FROM usercheck");
-					//$f2=mysql_num_rows($a2);
 
 					if (mysqli_num_rows($results) > 0) {
 						while ($row = mysqli_fetch_row($results)) {
@@ -261,14 +255,6 @@ check_login();
 							$year = $dateArray[0];
 							$monthName = date("M", mktime(0, 0, 0, $dateArray[1], 10));
 							$currentMonth = date('m', mktime(0, 0, 0, $dateArray[1], 10));
-							// echo $monthName; 
-							//$month = date("M", strtotime($user_date));
-							//echo $month;
-
-
-							//echo $month.'<br/>';
-
-							//$day = date('d',$dateArray));
 
 							if ($year == date("Y") && $currentMonth == date("m")) {
 
@@ -278,18 +264,14 @@ check_login();
 							}
 						}
 					}
-					//print_r($month_array);
 					foreach ($month_array as $key => $value) {
 						?>
 						<script type="text/javascript">
 							visitorsCount.push(<?php echo $value; ?>);
 						</script>
-					<?php
+						<?php
 					}
 					?>
-
-
-
 
 					<script type="text/javascript">
 						var d = new Date();
@@ -307,7 +289,7 @@ check_login();
 						month[10] = "Noviembre";
 						month[11] = "Diciembre";
 						var n = month[d.getMonth()];
-						$(function() {
+						$(function () {
 							$('#container').highcharts({
 								title: {
 									text: 'Gráfico de visitantes diarios de ' + n,
@@ -350,22 +332,13 @@ check_login();
 					<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 				</div>
-				<!-- <div class="panel-body">
-					<div id="morris-line-chart"></div>
-					<div class="text-right">
-						<a href="#">Ver Información <i class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div> -->
 			</div>
 		</div>
 
 	</div>
-
 	<!-- END DASHBOARD CHART -->
-
-
-
 	</div>
+	
 	</div>
 	<!-- BEGIN CHAT -->
 
@@ -406,10 +379,35 @@ check_login();
 	<script type="text/javascript" src="js/highcharts.js"></script>
 	<script type="text/javascript" src="js/exporting.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
+		$(document).ready(function () {
 			$(".live-tile,.flip-list").liveTile();
 		});
 	</script>
+	<script>
+		function descargarExcel() {
+			window.location.href = 'generar_excel.php';
+		}
+	</script>
+
 </body>
+<style>
+	.btn-descarga {
+		background-color: #294365;
+		border: none;
+		color: white;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 16px 25px;
+		cursor: pointer;
+		border-radius: 8px;
+	}
+
+	.btn-descarga:active {
+		background-color: #475166;
+	}
+</style>
 
 </html>
