@@ -16,7 +16,7 @@ function checkNewTicket() {
           icon: "../assets/img/icon-alert.png",
           timeout: 10000,
           onClick: function () {
-            window.location.href = "http://localhost:85/tickets-ti/SISTEMAS-TICKETS/admin/manage-tickets.php";
+            window.location.href = "https://tickets.shimaco.online:91/admin/manage-tickets.php";
           }
         });
         alert("Se ha agregado un nuevo ticket");

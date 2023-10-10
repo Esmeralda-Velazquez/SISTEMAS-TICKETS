@@ -363,7 +363,7 @@ check_login();
 	<script src="../assets/plugins/jquery-sparkline/jquery-sparkline.js"></script>
 	<script src="../assets/plugins/skycons/skycons.js"></script>
 	<script src="../assets/plugins/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
-	<script type="../text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="../text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
 	<script src="../assets/plugins/jquery-gmap/gmaps.js" type="text/javascript"></script>
 	<script src="assets/plugins/Mapplic/js/jquery.easing.js" type="text/javascript"></script>
 	<script src="../assets/plugins/Mapplic/js/jquery.mousewheel.js" type="text/javascript"></script>

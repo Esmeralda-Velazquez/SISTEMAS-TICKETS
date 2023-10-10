@@ -16,7 +16,7 @@ if (isset($_POST['update'])) {
   } else {
     mysqli_query($con, "UPDATE ticket SET status='$status', name_Admin='$userAdmin', area_asig='$assigned' WHERE id='$fid'");
   }
-    $comment = $_POST['aremark'];
+  $comment = $_POST['aremark'];
   if ($comment != "") {
     mysqli_query($con, "INSERT INTO comments (ticket_id, coment, name_admin, commentdate) VALUES ('$fid', '$comment', '$userAdmin', NOW())");
   }
@@ -58,10 +58,10 @@ $lastTicketId = $row['max_id'];
 <input type="hidden" id="lastTicketId" value="<?php echo $lastTicketId; ?>">
 
 <body class="">
-<script src="./notific_permiso.js"></script>
-<script src="./js/push.min.js"></script>
-<script src="./check_new_ticket.js"></script>
-<div id="notificacion-container"></div>
+  <script src="./notific_permiso.js"></script>
+  <script src="./js/push.min.js"></script>
+  <script src="./check_new_ticket.js"></script>
+  <div id="notificacion-container"></div>
   <?php include("header.php"); ?>
   <div class="page-container row">
 
@@ -102,47 +102,49 @@ $lastTicketId = $row['max_id'];
       <div class="row">
         <div class="col-md-12">
           <div class="grid simple no-border">
-          <div class="grid-title no-border descriptive clickable">
-    <h4 class="semi-bold">
-        <strong>
-            <?php echo $row['subject']; ?> /
-                <?php echo $row['task_type']; ?>
-              </strong>
-            </h4>
-            <p style="width:700px">
-    <span class="text-success bold">Ticket #
-    <?php echo $_SESSION['sid'] = $row['ticket_id']; ?> <br>
-              </span> - Fecha de Creación: 
-                  <?php echo $row['posting_date']; ?>
-                  <?php if ($row['status'] === 'Cerrado' && !empty($row['closing_date'])): ?>
-                    <br> 
-                    - Fecha de Finalización:
-                    <?php echo $row['closing_date']; ?>
-                  <?php endif; ?><br>
-                  <span class="label label-important" style="background-color: <?php echo getColorByStatus($row['status']); ?>; margin: 2px;">
-  <?php echo $row['status']; ?>
-</span>
-<span class="label label-important" style="background-color: <?php echo getColorByPrioprity($row['prioprity']); ?>; margin: 2px;">
-  <?php echo $row['prioprity']; ?>
-</span>
-<span class="label label-important" style="background-color: #000000; margin: 2px;">
-  <?php echo $row['area_asig']; ?>
-</span>
+            <div class="grid-title no-border descriptive clickable">
+              <h4 class="semi-bold">
+                <strong>
+                  <?php echo $row['subject']; ?> /
+                  <?php echo $row['task_type']; ?>
+                </strong>
+              </h4>
+              <p style="width:700px">
+                <span class="text-success bold">Ticket #
+                  <?php echo $_SESSION['sid'] = $row['ticket_id']; ?> <br>
+                </span> - Fecha de Creación:
+                <?php echo $row['posting_date']; ?>
+                <?php if ($row['status'] === 'Cerrado' && !empty($row['closing_date'])): ?>
+                <br>
+                - Fecha de Finalización:
+                <?php echo $row['closing_date']; ?>
+                <?php endif; ?><br>
+                <span class="label label-important"
+                  style="background-color: <?php echo getColorByStatus($row['status']); ?>; margin: 2px;">
+                  <?php echo $row['status']; ?>
+                </span>
+                <span class="label label-important"
+                  style="background-color: <?php echo getColorByPrioprity($row['prioprity']); ?>; margin: 2px;">
+                  <?php echo $row['prioprity']; ?>
+                </span>
+                <span class="label label-important" style="background-color: #000000; margin: 2px;">
+                  <?php echo $row['area_asig']; ?>
+                </span>
 
-                </p>
-                <div class="actions">
-                  <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a>
-                </div>
+              </p>
+              <div class="actions">
+                <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a>
               </div>
-                <div class="grid-body  no-border" style="display:none">
-                  <div class="post">
-                    <div class="user-profile-pic-wrapper">
-                      <div class="user-profile-pic-normal"> <img width="35" height="35"
-                          data-src-retina="../assets/img/user.png" data-src="../assets/img/user.png"
-                          src="../assets/img/user.png" alt=""> </div>
-                    </div>
-                    <div class="info-wrapper">
-                      <div class="info"><strong style="color: #000000">Usuario de reporte: </strong>
+            </div>
+            <div class="grid-body  no-border" style="display:none">
+              <div class="post">
+                <div class="user-profile-pic-wrapper">
+                  <div class="user-profile-pic-normal"> <img width="35" height="35"
+                      data-src-retina="../assets/img/user.png" data-src="../assets/img/user.png"
+                      src="../assets/img/user.png" alt=""> </div>
+                </div>
+                <div class="info-wrapper">
+                  <div class="info"><strong style="color: #000000">Usuario de reporte: </strong>
                     <?php echo $row['name']; ?>
                   </div>
                   <div class="clearfix"></div>
@@ -198,11 +200,11 @@ $lastTicketId = $row['max_id'];
                               <input type="hidden" name="assignedUpdate" value="<?php echo $row['assigned_user']; ?>">
                               <?php
                             }
-                          ?>
-  
+                            ?>
+
                             <div class="col-md-6 col-xs-12">
                               <label class="col-md-6 col-xs-12 control-label"><strong
-                                  style="color: #000000">Status:</strong></label>                                                        
+                                  style="color: #000000">Status:</strong></label>
                               <div class="col-md-6 col-xs-12">
                                 <select name="statusUpdate" class="form-control select" required>
                                   <option value="Visto">VISTO</option>
@@ -213,9 +215,6 @@ $lastTicketId = $row['max_id'];
                               </div>
                             </div>
                           </div>
-
-
-
                           <div class="user-profile-pic-wrapper">
                             <div class="user-profile-pic-normal"> <img width="35" height="35"
                                 data-src-retina="../assets/img/admin.png" data-src="../assets/img/admin.png"
@@ -232,35 +231,35 @@ $lastTicketId = $row['max_id'];
                           <br>
                           <textarea name="aremark" cols="50" rows="2" style="border:2px solid #193A63"></textarea>
                           <?php
-                              // Obtener la ruta del archivo adjunto desde la base de datos
-                              $archivo_adj = $row['archivo_adj'];
+                          // Obtener la ruta del archivo adjunto desde la base de datos
+                          $archivo_adj = $row['archivo_adj'];
 
-                              // Verificar si hay un archivo adjunto
-                              if (!empty($archivo_adj)) {
-                                $nombre_archivo = basename($archivo_adj); // Obtener el nombre del archivo
-                                $tamanio_texto = 'font-size: 14px;'; // Definir el tamaño del texto
-                          
-                                // Reemplazar "admin/" con una cadena vacía en la ruta del archivo
-                                $archivo_adj = str_replace("admin/", "", $archivo_adj);
-                                echo '<p><strong style="' . $tamanio_texto . '">Archivo adjunto:</strong> <a href="' . $archivo_adj . '" download>';
-                                echo '<span style="' . $tamanio_texto . '">' . $nombre_archivo . '</span>'; // Aplicar el mismo tamaño del texto aquí
-                                echo '</a></p>';
-                              }
-                              ?>
+                          // Verificar si hay un archivo adjunto
+                          if (!empty($archivo_adj)) {
+                            $nombre_archivo = basename($archivo_adj); // Obtener el nombre del archivo
+                            $tamanio_texto = 'font-size: 14px;'; // Definir el tamaño del texto
+                      
+                            // Reemplazar "admin/" con una cadena vacía en la ruta del archivo
+                            $archivo_adj = str_replace("admin/", "", $archivo_adj);
+                            echo '<p><strong style="' . $tamanio_texto . '">Archivo adjunto:</strong> <a href="' . $archivo_adj . '" download>';
+                            echo '<span style="' . $tamanio_texto . '">' . $nombre_archivo . '</span>'; // Aplicar el mismo tamaño del texto aquí
+                            echo '</a></p>';
+                          }
+                          ?>
                           <hr>
                           <hr>
                           <p class="small-text">
                             <input name="update" type="submit" class="txtbox1" id="Update" value="ACTUALIZAR" size="40"
                               style="background-color: #193A63;color: #FFFFFF" />
                             <input name="frm_id" type="hidden" id="frm_id" value="<?php echo $row['id']; ?>" />
-                          </p>                      
+                          </p>
                         </form>
 
                       </div>
                       <div class="clearfix"></div>
                     </div>
                     <div class="clearfix"></div>
-                  </div>             
+                  </div>
                   <!--FIN FORMULARIO -->
 
                   <!-- AGREGAR COMENTARIOS -->
@@ -274,12 +273,6 @@ $lastTicketId = $row['max_id'];
                       echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
                       echo "<p>{$commentRow['commentdate']}</p>";
                       ?>
-                      <script>
-                              /*setInterval(function() {
-                                actualizarComentarios(<?php //echo $idTicketActual; ?>);
-                              }, 60000); // 60000 milisegundos = 1 minuto
-                              * /
-                      </script>
                       <?php
                     }
                     ?>
@@ -357,7 +350,7 @@ $lastTicketId = $row['max_id'];
       case 'Visto':
         return '#8bc59b';
       default:
-        return '#B9A99C'; // Color gris por defecto
+        return '#FFFFFF';
     }
   }
 

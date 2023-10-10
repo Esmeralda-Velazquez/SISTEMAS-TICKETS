@@ -58,7 +58,7 @@ $lastTicketId = $row['max_id'];
 <input type="hidden" id="lastTicketId" value="<?php echo $lastTicketId; ?>">
 
 <body class="">
-  <script src="./check_new_ticket.js"></script>
+  <!-- <script src="./check_new_ticket.js"></script> -->
   <?php include("header.php"); ?>
   <div class="page-container row">
 
@@ -88,7 +88,7 @@ $lastTicketId = $row['max_id'];
 
       <!------------------------------------------------------------------------------------------------------->
       <?php
-      $statuses = array('Abierto', 'Visto', 'En Espera', 'Cerrado');
+      $statuses = array('Abierto', 'Visto', 'En espera', 'Cerrado');
       foreach ($statuses as $status) {
 
         echo '<div class="column">';
@@ -117,13 +117,13 @@ $lastTicketId = $row['max_id'];
                     - Fecha de Finalización:
                     <?php echo $row['closing_date']; ?>
                   <?php endif; ?><br>
-                  <span class="label label-important" style="background-color: <?php echo getColorByStatus($row['status']); ?>"> 
+                  <span class="label label-important" style="background-color: <?php echo getColorByStatus($row['status']); ?>; margin: 2px;"> 
                     <?php echo $row['status']; ?>
                   </span>
-                  <span class="label label-important" style="background-color: <?php echo getColorByPrioprity($row['prioprity']); ?>">
+                  <span class="label label-important" style="background-color: <?php echo getColorByPrioprity($row['prioprity']); ?>; margin: 2px;">
                     <?php echo $row['prioprity']; ?>
                   </span>
-                  <span class="label label-important" style="background-color: #000000;">
+                  <span class="label label-important" style="background-color: #000000; margin: 2px;">
                     <?php echo $row['area_asig']; ?>
                   </span>
                 </p>
@@ -201,9 +201,10 @@ $lastTicketId = $row['max_id'];
                                 echo '<label class="col-md-6 col-xs-12 control-label"><strong style="color: #000000">Reasignar a:</strong></label>';
                                 echo '<div class="col-md-6 col-xs-12">';
                                 echo '<select name="reassignedUpdate" class="form-control select">';
-                                echo '<option value="">Seleccionar área</option>';
+                                echo '<option value="MANTENIMIENTO">MANTENIMIENTO</option>';
 
-                                $sql2 = "SELECT DISTINCT area FROM admin";
+                                $sql2 = "SELECT DISTINCT area FROM admin WHERE area != 'MANTENIMIENTO'";
+                                
                                 $result = $con->query($sql2);
                                 while ($row2 = $result->fetch_assoc()) {
                                   $atender = htmlspecialchars($row2["area"]);
@@ -227,8 +228,6 @@ $lastTicketId = $row['max_id'];
                               </div>
                             </div>
                           </div>
-
-
 
                           <div class="user-profile-pic-wrapper">
                             <div class="user-profile-pic-normal"> <img width="35" height="35"
@@ -282,12 +281,6 @@ $lastTicketId = $row['max_id'];
 
                                 // Actualiza el estado y otros detalles
                                 mysqli_query($con, "UPDATE ticket SET status='$status', name_Admin='$userAdmin' WHERE id='$fid'");
-
-                                // Inserta comentario si se proporcionó
-                                if (!empty($comment)) {
-                                  mysqli_query($con, "INSERT INTO comments (ticket_id, coment, name_admin, commentdate) VALUES ('$fid', '$comment', '$userAdmin', NOW())");
-                                }
-
                                 echo '<script>alert("Ticket ha sido actualizado correctamente"); location.replace(document.referrer)</script>';
                               }
                               ?>
@@ -309,14 +302,6 @@ $lastTicketId = $row['max_id'];
                     while ($commentRow = mysqli_fetch_array($commentsResult)) {
                       echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
                       echo "<p>{$commentRow['commentdate']}</p>";
-                      ?>
-                      <script>
-                              /*setInterval(function() {
-                                actualizarComentarios(<?php //echo $idTicketActual; ?>);
-                              }, 60000); // 60000 milisegundos = 1 minuto
-                              * /
-                      </script>
-                      <?php
                     }
                     ?>
                   </div>

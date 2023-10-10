@@ -1,7 +1,5 @@
 <?php
 session_start();
-//echo $_SESSION['id'];
-//$_SESSION['msg'];
 include("dbconnection.php");
 include("checklogin.php");
 check_login();
@@ -9,13 +7,13 @@ function getColorByStatus($status)
 {
     switch ($status) {
         case 'Abierto':
-            return '#B01411'; // Color rojo
+            return '#B01411';
         case 'En espera':
-            return '#D7B40C'; // Color amarillo
+            return '#D7B40C';
         case 'Cerrado':
-            return '#000000'; // Color negro
+            return '#000000';
         default:
-            return '#B9A99C'; // Color negro por defecto
+            return '#B9A99C';
     }
 }
 ?>
@@ -80,7 +78,6 @@ function getColorByStatus($status)
             <?php $rt = mysqli_query($con, "select * from ticket where email_id='" . $_SESSION['login'] . "'");
             $num = mysqli_num_rows($rt);
             if ($num > 0) {
-                // -----------------!!!!
                 while ($row = mysqli_fetch_array($rt)) {
                     ?>
                     <div class="row">
@@ -106,9 +103,6 @@ function getColorByStatus($status)
                                 </div>
                                 <div class="grid-body  no-border" style="display:none">
                                     <div class="post">
-
-
-
                                         <div class="user-profile-pic-wrapper">
                                             <div class="user-profile-pic-normal"> <img width="35" height="35"
                                                     data-src-retina="assets/img/user.png" data-src="assets/img/user.png"
@@ -123,7 +117,28 @@ function getColorByStatus($status)
                                         <div class="clearfix"></div>
                                     </div>
                                     <br>
+                                    <div id="comments-container">
+                                        <p class="info" style="font-weight: bold; font-size: 15px; color:#0E3A88">Respuesta:
+                                        </p>
+                                        <?php
+                                        $idTicketActual = $row['id'];
+                                        $commentsResult = mysqli_query($con, "SELECT * FROM comments WHERE ticket_id='$idTicketActual'");
+                                        // Mostrar los comentarios
+                                        while ($commentRow = mysqli_fetch_array($commentsResult)) {
+                                            echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
+                                            echo "<p>{$commentRow['commentdate']}</p>";
+                                            ?>
+                                            <script>
+                                                //setInterval(function () {
+                                                    //location.reload();
+                                                    //actualizarComentarios(<?php //echo $idTicketActual; ?>);
+                                                //}, 60000);
 
+                                            </script>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
                                     <?php if ($row['admin_remark'] != ''): ?>
                                         <div class="form-actions">
                                             <div class="post col-md-12">
