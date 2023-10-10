@@ -217,7 +217,7 @@ check_login();
 			<div class="panel panel-red">
 				<div class="panel-heading">
 					<h3 class="panel-title" style="color:#193A63;"><i class="fa fa-long-arrow-right"></i> Todas las
-						Visitas de Usuario</h3>
+						Visitas de Usuario del mes </h3>
 
 					<script type="text/javascript">
 						var visitorsCount = [];

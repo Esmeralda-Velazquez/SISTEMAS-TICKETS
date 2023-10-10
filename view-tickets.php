@@ -1,12 +1,12 @@
 <?php
 session_start();
-
+//echo $_SESSION['id'];
+//$_SESSION['msg'];
 include("dbconnection.php");
 include("checklogin.php");
-
 check_login();
-
-function getColorByStatus($status) {
+function getColorByStatus($status)
+{
     switch ($status) {
         case 'Abierto':
             return '#B01411'; // Color rojo
@@ -18,7 +18,6 @@ function getColorByStatus($status) {
             return '#B9A99C'; // Color negro por defecto
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +44,8 @@ function getColorByStatus($status) {
     <link href="assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
 </head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
 
 <body class="">
     <?php include("header.php"); ?>
@@ -61,7 +62,7 @@ function getColorByStatus($status) {
             </div>
             <div class="modal-body"> Widget settings form goes here </div>
         </div>
-        <div class="clearfix"></div>
+
         <div class="content">
             <ul class="breadcrumb">
                 <li>
@@ -76,60 +77,69 @@ function getColorByStatus($status) {
 
             <h4> <span class="semi-bold">Tickets</span></h4>
             <br>
-            <?php
-            $rt = mysqli_query($con, "select * from ticket where email_id='" . $_SESSION['login'] . "'");
+            <?php $rt = mysqli_query($con, "select * from ticket where email_id='" . $_SESSION['login'] . "'");
             $num = mysqli_num_rows($rt);
             if ($num > 0) {
+                // -----------------!!!!
                 while ($row = mysqli_fetch_array($rt)) {
-            ?>
+                    ?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="grid simple no-border">
                                 <div class="grid-title no-border descriptive clickable">
-                                    <h4 class="semi-bold"><?php echo $row['subject']; ?></h4>
-                                    <p><span class="text-success bold">Ticket #<?php echo $row['ticket_id']; ?><br></span> - Fecha de Creación <?php echo $row['posting_date']; ?><br>
-                                    </span> - Fecha de Finalización <?php echo $row['closing_date']; ?><br>
-                                        <span class="label label-important" style="background-color: <?php echo getColorByStatus($row['status']); ?>"><?php echo $row['status']; ?></span>
+                                    <h4 class="semi-bold">
+                                        <?php echo $row['subject']; ?>
+                                    </h4>
+                                    <p><span class="text-success bold">Ticket #
+                                            <?php echo $row['ticket_id']; ?><br>
+                                        </span> - Fecha de Creación
+                                        <?php echo $row['posting_date']; ?><br>
+                                        </span> - Fecha de Finalización
+                                        <?php echo $row['closing_date']; ?><br>
+                                        <span class="label label-important"
+                                            style="background-color: <?php echo getColorByStatus($row['status']); ?>">
+                                            <?php echo $row['status']; ?>
+                                        </span>
                                     </p>
-                                    <div class="actions"> <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a> </div>
+                                    <div class="actions"> <a class="view" href="javascript:;"><i
+                                                class="fa fa-angle-down"></i></a> </div>
                                 </div>
                                 <div class="grid-body  no-border" style="display:none">
                                     <div class="post">
 
+
+
                                         <div class="user-profile-pic-wrapper">
-                                            <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/user.png" data-src="assets/img/user.png" src="assets/img/user.png" alt=""> </div>
+                                            <div class="user-profile-pic-normal"> <img width="35" height="35"
+                                                    data-src-retina="assets/img/user.png" data-src="assets/img/user.png"
+                                                    src="assets/img/user.png" alt=""> </div>
                                         </div>
-
                                         <div class="info-wrapper">
-
-                                            <div class="info"><?php echo $row['ticket']; ?> </div>
+                                            <div class="info">
+                                                <?php echo $row['ticket']; ?>
+                                            </div>
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
                                     <br>
-                                    <div id="comments-container">
-                                        <p class="info" style="font-weight: bold; font-size: 15px; color:#0E3A88">Respuesta: </p>
-                                        <?php
-                                        $idTicketActual = $row['id'];
-                                        $commentsResult = mysqli_query($con, "SELECT DISTINCT coment, name_admin, commentdate FROM comments WHERE ticket_id='$idTicketActual'");
-                                        // Mostrar los comentarios
-                                        while ($commentRow = mysqli_fetch_array($commentsResult)) {
-                                            echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
-                                            echo "<p>{$commentRow['commentdate']}</p>";
-                                        }
-                                        ?>
-                                    </div>
 
-                                    <?php if ($row['admin_remark'] != '') : ?>
+                                    <?php if ($row['admin_remark'] != ''): ?>
                                         <div class="form-actions">
                                             <div class="post col-md-12">
                                                 <div class="user-profile-pic-wrapper">
-                                                    <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/admin.png" data-src="assets/img/admin.png" src="assets/img/admin.png" alt="Admin"> </div>
+                                                    <div class="user-profile-pic-normal"> <img width="35" height="35"
+                                                            data-src-retina="assets/img/admin.jpg" data-src="assets/img/admin.jpg"
+                                                            src="assets/img/admin.jpg" alt="Admin"> </div>
                                                 </div>
                                                 <div class="info-wrapper">
+
                                                     <br>
-                                                    <!-- <p class="small-text">Publicado en <?php //echo $row['admin_remark_date']; ?></p> -->
+                                                    <?php echo $row['admin_remark']; ?>
+                                                    <hr>
+                                                    <p class="small-text">Publicado en
+                                                        <?php echo $row['admin_remark_date']; ?>
+                                                    </p>
                                                 </div>
                                                 <div class="clearfix"></div>
                                             </div>
@@ -139,38 +149,49 @@ function getColorByStatus($status) {
 
                                 </div>
                             </div>
-                        </div>
-                    <?php } }                     
-            ?>
-            </script>
+                        <?php }
+            } else { ?>
+                        <h3 align="center" style="color:red;">Sin registros que mostrar</h3>
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </div>
-        </div>
-            </div>
-                </div>
-                     </div>
-                         </div>
-                            </div>
-                                 </div>
-                                    </div>
-                                        </div>
-                                             </div>
-                                                    </body>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- BEGIN CHAT -->
+
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN CORE JS FRAMEWORK-->
+    <script src="assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/breakpoints.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
+    <!-- END CORE JS FRAMEWORK -->
+    <!-- BEGIN PAGE LEVEL JS -->
+    <script src="assets/plugins/pace/pace.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <script src="assets/js/support_ticket.js" type="text/javascript"></script>
+    <!-- BEGIN CORE TEMPLATE JS -->
+    <script src="assets/js/core.js" type="text/javascript"></script>
+    <script src="assets/js/chat.js" type="text/javascript"></script>
+    <script src="assets/js/demo.js" type="text/javascript"></script>
+    <!-- END CORE TEMPLATE JS -->
+</body>
+
 </html>
-<script>
-    // NO SE UTILIZA POR EL MOMENTO
-    function actualizarComentarios(idTicketActual) {
-
-        console.log('ID del ticket actual: ' + idTicketActual);
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("comments-container").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("GET", "get_comments.php?id=" + idTicketActual, true);
-        xhttp.send();
-    }
-</script>
