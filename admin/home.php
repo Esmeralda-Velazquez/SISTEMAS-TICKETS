@@ -37,7 +37,7 @@ check_login();
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<link href="../css/plugins/morris.css" rel="stylesheet">
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 </head>
 
 <body class="">
