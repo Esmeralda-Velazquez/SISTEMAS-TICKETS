@@ -22,7 +22,7 @@ if (isset($_POST['update'])) {
   }
   echo '<script>alert("Ticket ha sido actualizado correctamente"); location.replace(document.referrer)</script>';
 }
-$query = "SELECT MAX(id) as max_id FROM ticket";
+$query = "SELECT MAX(id) as max_id FROM ticket WHERE area_asig='MANTENIMIENTO'";
 $result = mysqli_query($con, $query);
 $row = mysqli_fetch_assoc($result);
 $lastTicketId = $row['max_id'];
@@ -58,7 +58,12 @@ $lastTicketId = $row['max_id'];
 <input type="hidden" id="lastTicketId" value="<?php echo $lastTicketId; ?>">
 
 <body class="">
-  <!-- <script src="./check_new_ticket.js"></script> -->
+  <!--Notificación -->
+<script src="./notific_permiso.js"></script>
+  <script src="./js/push.min.js"></script>
+  <script src="./check_new_ticketMant.js"></script>
+  <div id="notificacion-container"></div>
+
   <?php include("header.php"); ?>
   <div class="page-container row">
 

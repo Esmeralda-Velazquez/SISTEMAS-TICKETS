@@ -10,7 +10,6 @@ function checkNewTicket() {
       document.body.click();
       console.log(response);
       if (response === "new_ticket") {
-
         Push.create("NUEVO TICKET", {
           body: "Se ha creado un nuevo ticket.",
           icon: "../assets/img/icon-alert.png",

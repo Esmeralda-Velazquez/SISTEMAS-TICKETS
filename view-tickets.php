@@ -45,7 +45,6 @@ function getColorByStatus($status)
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-
 <body class="">
     <?php include("header.php"); ?>
     <div class="page-container row">

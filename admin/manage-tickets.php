@@ -58,10 +58,12 @@ $lastTicketId = $row['max_id'];
 <input type="hidden" id="lastTicketId" value="<?php echo $lastTicketId; ?>">
 
 <body class="">
+  <!--Notificación -->
   <script src="./notific_permiso.js"></script>
   <script src="./js/push.min.js"></script>
   <script src="./check_new_ticket.js"></script>
   <div id="notificacion-container"></div>
+
   <?php include("header.php"); ?>
   <div class="page-container row">
 
