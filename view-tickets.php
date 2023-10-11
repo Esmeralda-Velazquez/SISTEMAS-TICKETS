@@ -12,12 +12,13 @@ function getColorByStatus($status)
             return '#D7B40C';
         case 'Cerrado':
             return '#000000';
+        case 'Visto':
+            return '#8bc59b';
         default:
             return '#B9A99C';
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -75,7 +76,8 @@ function getColorByStatus($status)
 
             <h4> <span class="semi-bold">Tickets</span></h4>
             <br>
-            <?php $rt = mysqli_query($con, "select * from ticket where email_id='" . $_SESSION['login'] . "'");
+            <?php
+            $rt = mysqli_query($con, "SELECT * FROM ticket WHERE email_id='" . $_SESSION['login'] . "' ORDER BY posting_date DESC");
             $num = mysqli_num_rows($rt);
             if ($num > 0) {
                 while ($row = mysqli_fetch_array($rt)) {
@@ -127,15 +129,6 @@ function getColorByStatus($status)
                                         while ($commentRow = mysqli_fetch_array($commentsResult)) {
                                             echo "<p><strong>{$commentRow['name_admin']}:</strong> {$commentRow['coment']}</p>";
                                             echo "<p>{$commentRow['commentdate']}</p>";
-                                            ?>
-                                            <script>
-                                                //setInterval(function () {
-                                                    //location.reload();
-                                                    //actualizarComentarios(<?php //echo $idTicketActual; ?>);
-                                                //}, 60000);
-
-                                            </script>
-                                            <?php
                                         }
                                         ?>
                                     </div>

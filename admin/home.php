@@ -104,10 +104,8 @@ check_login();
 
 						</div>
 					</div>
-
-
 				</div>
-				<div class="col-md-3 col-vlg-3 col-sm-6" style="width: 320px;">
+				<div class="col-md-3 col-vlg-3 col-sm-6" style="width: 370px;">
 					<div class="tiles purple m-b-10">
 						<div class="tiles-body">
 							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
@@ -131,7 +129,18 @@ check_login();
 									$qr1 = mysqli_query($con, "select * from ticket where status='Abierto'");
 									$oq1 = mysqli_num_rows($qr1);
 									?>
-									<span class="item-title">Nuevo</span> <span
+									<span class="item-title">Nuevos</span> <span
+										class="item-count animate-number semi-bold" data-value="<?php echo $oq1; ?>"
+										data-animation-duration="700">0</span>
+								</div>
+							</div>
+							<div class="widget-stats">
+								<div class="wrapper transparent">
+									<?php
+									$qr1 = mysqli_query($con, "select * from ticket where status='Visto'");
+									$oq1 = mysqli_num_rows($qr1);
+									?>
+									<span class="item-title">Vistos</span> <span
 										class="item-count animate-number semi-bold" data-value="<?php echo $oq1; ?>"
 										data-animation-duration="700">0</span>
 								</div>
@@ -162,21 +171,23 @@ check_login();
 					</div>
 				</div>
 				<!--Apartado de calculo de tiempo de espera -->
-               <div class="col-md-3 col-vlg-3 col-sm-6" style="width: 390px; ">
+				<div class="col-md-3 col-vlg-3 col-sm-6" style="width: 370px; ">
 					<div class="tiles red m-b-10">
 						<div class="tiles-body">
 							<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
 									class="remove"></a> </div>
-							<div class="tiles-title " style=' font-size: 14px;'>Tiempo promedio de atención de tickets por hora </div>
+							<div class="tiles-title " style=' font-size: 14px;'>Tiempo promedio de atención de tickets
+								por hora </div>
 							<div class="widget-stats">
 								<div class="wrapper transparent">
 									<?php
 									$qr = mysqli_query($con, "SELECT AVG(TIMESTAMPDIFF(HOUR, posting_date, closing_date)) AS promedio_horas, AVG(TIMESTAMPDIFF(DAY, posting_date, closing_date)) AS promedio_dias FROM ticket WHERE closing_date IS NOT NULL AND status = 'cerrado' AND MONTH(posting_date) = MONTH(CURRENT_DATE) AND YEAR(posting_date) = YEAR(CURRENT_DATE) AND area_asig = 'TI';");
 									$respuesta = mysqli_fetch_assoc($qr)
-									
-									?>
-									<span class="item-title">TI</span> 
-									<span class="item-count animate-number semi-bold" data-value="<?php echo number_format($respuesta['promedio_horas'],2)?>"
+
+										?>
+									<span class="item-title">TI</span>
+									<span class="item-count animate-number semi-bold"
+										data-value="<?php echo number_format($respuesta['promedio_horas'], 2) ?>"
 										data-animation-duration="700">0</span>
 								</div>
 							</div>
@@ -185,10 +196,11 @@ check_login();
 									<?php
 									$qr = mysqli_query($con, "SELECT AVG(TIMESTAMPDIFF(HOUR, posting_date, closing_date)) AS promedio_horas, AVG(TIMESTAMPDIFF(DAY, posting_date, closing_date)) AS promedio_dias FROM ticket WHERE closing_date IS NOT NULL AND status = 'cerrado' AND MONTH(posting_date) = MONTH(CURRENT_DATE) AND YEAR(posting_date) = YEAR(CURRENT_DATE) AND area_asig = 'COMPRAS';");
 									$respuesta = mysqli_fetch_assoc($qr)
-									
-									?>
-									<span class="item-title">COMPRAS</span> 
-									<span class="item-count animate-number semi-bold" data-value="<?php echo number_format($respuesta['promedio_horas'],2)?>"
+
+										?>
+									<span class="item-title">COMPRAS</span>
+									<span class="item-count animate-number semi-bold"
+										data-value="<?php echo number_format($respuesta['promedio_horas'], 2) ?>"
 										data-animation-duration="700">0</span>
 								</div>
 							</div>
@@ -197,10 +209,11 @@ check_login();
 									<?php
 									$qr = mysqli_query($con, "SELECT AVG(TIMESTAMPDIFF(HOUR, posting_date, closing_date)) AS promedio_horas, AVG(TIMESTAMPDIFF(DAY, posting_date, closing_date)) AS promedio_dias FROM ticket WHERE closing_date IS NOT NULL AND status = 'cerrado' AND MONTH(posting_date) = MONTH(CURRENT_DATE) AND YEAR(posting_date) = YEAR(CURRENT_DATE) AND area_asig = 'MANTENIMIENTO';");
 									$respuesta = mysqli_fetch_assoc($qr)
-									
-									?>
-									<span class="item-title">MANTENIMIENTO</span> 
-									<span class="item-count animate-number semi-bold" data-value=" <?php echo number_format($respuesta['promedio_horas'],2)?>"
+
+										?>
+									<span class="item-title">MANTENIMIENTO</span>
+									<span class="item-count animate-number semi-bold"
+										data-value=" <?php echo number_format($respuesta['promedio_horas'], 2) ?>"
 										data-animation-duration="700">0</span>
 								</div>
 							</div>
@@ -334,11 +347,123 @@ check_login();
 				</div>
 			</div>
 		</div>
+		<!--Filtros de TI, Compras, Mantenimiento y ERP SILVA para contavilizar tickets en tablero 
+		@autor: Esmeralda Velazquez
+		@Fecha: 11-10-2023
+	     -->
+		<div class="col-md-3 col-vlg-3 col-sm-6" style="width: 370px;margin: 15px;">
+			<div class="tiles blue m-b-10">
+				<div class="tiles-body">
+					<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
+							class="remove"></a> </div>
+					<div class="tiles-title ">Tickets TI</div>
+					<br>
+					<div class="widget-stats">
+						<div class="wrapper transparent">
+							<?php
+							$qr = mysqli_query($con, "select * from ticket where area_asig='TI' OR area_asig IS NULL OR area_asig=''OR area_asig=' ';");
+							$oq = mysqli_num_rows($qr);
+							?>
+							<span class="item-title">General</span> <span class="item-count animate-number semi-bold"
+								data-value="<?php echo $oq ?>" data-animation-duration="700">0</span>
+						</div>
+					</div>
+					<div class="widget-stats">
+						<div class="wrapper transparent">
+							<?php
+							$qr1 = mysqli_query($con, "SELECT * FROM ticket WHERE status = 'Abierto' AND (area_asig = 'TI' OR area_asig IS NULL OR area_asig = '' OR area_asig = ' ')");
+							$oq1 = mysqli_num_rows($qr1);
+							?>
+							<span class="item-title">Nuevo</span> <span class="item-count animate-number semi-bold"
+								data-value="<?php echo $oq1; ?>" data-animation-duration="700">0</span>
+						</div>
+					</div>
+					<div class="widget-stats">
+						<div class="wrapper transparent">
+							<?php
+							$qr1 = mysqli_query($con, "SELECT * FROM ticket WHERE status = 'Visto' AND (area_asig = 'TI' OR area_asig IS NULL OR area_asig = '' OR area_asig = ' ')");
+							$oq1 = mysqli_num_rows($qr1);
+							?>
+							<span class="item-title">Visto</span> <span class="item-count animate-number semi-bold"
+								data-value="<?php echo $oq1; ?>" data-animation-duration="700">0</span>
+						</div>
+					</div>
+					<div class="widget-stats ">
+						<div class="wrapper last">
+							<?php
+							$qr2 = mysqli_query($con, "SELECT * FROM ticket WHERE status = 'En espera' AND (area_asig = 'TI' OR area_asig IS NULL OR area_asig = '' OR area_asig = ' ')");
+							$oq2 = mysqli_num_rows($qr2);
+							?>
+							<span class="item-title">En espera</span> <span class="item-count animate-number semi-bold"
+								data-value="<?php echo $oq2; ?>" data-animation-duration="700">0</span>
+						</div>
+					</div>
+					<div class="widget-stats ">
+						<div class="wrapper last">
+							<?php
+							$qr2 = mysqli_query($con, "SELECT * FROM ticket WHERE status = 'Cerrado' AND (area_asig = 'TI' OR area_asig IS NULL OR area_asig = '' OR area_asig = ' ')");
+							$oq2 = mysqli_num_rows($qr2);
+							?>
+							<span class="item-title">Cerrados</span> <span class="item-count animate-number semi-bold"
+								data-value="<?php echo $oq2; ?>" data-animation-duration="700">0</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Las otras tres areas-->
+		<?php
+// Función para generar un tablero
+function generateDashboard($con, $area,$colorClass) {
+    $query = "SELECT * FROM ticket WHERE area_asig = '$area';";
+    $result = mysqli_query($con, $query);
+    $totalTickets = mysqli_num_rows($result);
 
+    $statuses = ['Abierto', 'Visto', 'En espera', 'Cerrado'];
+    $statusCounts = [];
+
+    foreach ($statuses as $status) {
+        $query = "SELECT * FROM ticket WHERE status = '$status' AND area_asig = '$area'";
+        $result = mysqli_query($con, $query);
+        $statusCount = mysqli_num_rows($result);
+        $statusCounts[$status] = $statusCount;
+    }
+    
+    echo '<div class="col-md-3 col-vlg-3 col-sm-6" style="width: 370px;margin: 15px;">';
+    echo '<div class="tiles ' . $colorClass . ' m-b-10">';
+    echo '<div class="tiles-body">';
+    echo '<div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>';
+    echo "<div class='tiles-title'>Tickets $area</div>";
+    echo '<br>';
+
+    echo '<div class="widget-stats">';
+    echo '<div class="wrapper transparent">';
+    echo "<span class='item-title'>General</span> <span class='item-count animate-number semi-bold' data-value='$totalTickets' data-animation-duration='700'>0</span>";
+    echo '</div>';
+    echo '</div>';
+
+    foreach ($statusCounts as $status => $count) {
+        echo '<div class="widget-stats">';
+        echo '<div class="wrapper transparent">';
+        echo "<span class='item-title'>$status</span> <span class='item-count animate-number semi-bold' data-value='$count' data-animation-duration='700'>0</span>";
+        echo '</div>';
+        echo '</div>';
+    }
+
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+}
+generateDashboard($con, "MANTENIMIENTO", "purple"); // Ejemplo de color "blue"
+generateDashboard($con, "COMPRAS", "green"); // Ejemplo de color "green"
+generateDashboard($con, "ERP SILVA", "red"); // Ejemplo de color "red"
+
+?>
+		<!--fin de las areas-->
 	</div>
 	<!-- END DASHBOARD CHART -->
 	</div>
-	
+
 	</div>
 	<!-- BEGIN CHAT -->
 
