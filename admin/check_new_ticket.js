@@ -18,7 +18,7 @@ function checkNewTicket() {
             window.location.href = "https://tickets.shimaco.online:91/admin/manage-tickets.php";
           }
         });
-        alert("Se ha agregado un nuevo ticket");
+        //alert("Se ha agregado un nuevo ticket");
         clearInterval(intervalId);
         location.reload();
       }
